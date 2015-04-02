@@ -14,7 +14,7 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class GamePlayView extends JPanel {
 
-	Bank bank = MainTemp.gc.getBank();			// reference to games bank
+	Bank bank = Main.gc.getBank();			// reference to games bank
 
 	JPanel gameBoardsPanel = new GameBoards();	// change back after testing
 	//JPanel gameBoardsPanel = new JPanel();
@@ -89,7 +89,7 @@ public class GamePlayView extends JPanel {
 		//System.out.println("GameTiles: " + GameController.getGameTiles().size());
 		//bankPanel.add(new JButton("Game Tiles #" + GameController.getGameTiles().size()));
 		//System.out.println("GameTiles: " + MainTemp.gc.getGameTiles().size());
-		JButton tiles = new JButton("Game Tiles #"+ MainTemp.gc.getGameTiles().size());
+		JButton tiles = new JButton("Game Tiles #"+ Main.gc.getGameTiles().size());
 		tiles.setPreferredSize(new Dimension(95, 95));
 		tiles.setFont(new Font("Default", Font.PLAIN, 10));
 		tiles.setEnabled(false);

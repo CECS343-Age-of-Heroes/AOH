@@ -15,7 +15,7 @@ import javax.swing.*;
 public class GameBoards extends JPanel {
 	
 	//private ArrayList playerBoards = new ArrayList();
-	private ArrayList<Player> pList = MainTemp.gc.getPlayersList();
+	private ArrayList<Player> pList = Main.gc.getPlayersList();
 
 	// constructor
 	public GameBoards() {

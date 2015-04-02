@@ -29,9 +29,9 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class TileSelectionView extends JPanel {
 	// reference to the games game controller
-	private GameController gc = MainTemp.gc;
+	private GameController gc = Main.gc;
 	// reference to the games player list
-	private ArrayList<Player> pList = MainTemp.gc.getPlayersList();
+	private ArrayList<Player> pList = Main.gc.getPlayersList();
 	private Player p1 = pList.get(0);
 	private Player p2 = pList.get(1);
 	private Player p3 = pList.get(2);
@@ -284,7 +284,7 @@ public class TileSelectionView extends JPanel {
 	
 	// checks to see if it is the computers turn
 	private void checkTurn() {
-		int humanIndex = MainTemp.gc.getHumanIndex();
+		int humanIndex = gc.getHumanIndex();
 		int mod = count % 6;
 		if (mod != humanIndex && mod != (5-humanIndex)) {
 			if (count < 18)

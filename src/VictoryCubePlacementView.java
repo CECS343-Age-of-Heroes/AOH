@@ -16,8 +16,8 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class VictoryCubePlacementView extends JPanel {
 	// get the games victory cards from the bank 
-	private VictoryCard theWonder = MainTemp.gc.getBank().getTheWonder();
-	private VictoryCard mostBuildings = MainTemp.gc.getBank().getMostBuildings();
+	private VictoryCard theWonder = Main.gc.getBank().getTheWonder();
+	private VictoryCard mostBuildings = Main.gc.getBank().getMostBuildings();
 	public JButton victoryDoneButton = new JButton("Finish");
 	// keeps track of number of cubes placed this round
 	private int clickCount = 0;		// and keeps track of card clicks

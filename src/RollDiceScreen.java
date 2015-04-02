@@ -16,7 +16,7 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class RollDiceScreen extends JPanel {
 	// get players list from game controller
-	private ArrayList<Player> pList = MainTemp.gc.getPlayersList();
+	private ArrayList<Player> pList = Main.gc.getPlayersList();
 	// panel with players name and culture
 	private JPanel playersPanel = new JPanel();
 	// panel with the dice value rolled

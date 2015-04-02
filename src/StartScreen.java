@@ -16,7 +16,7 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class StartScreen extends JPanel {
 	// get the player list from game controller
-	private ArrayList<Player> pList = MainTemp.gc.getPlayersList();
+	private ArrayList<Player> pList = Main.gc.getPlayersList();
 	// var for each player
 	private Player human = pList.get(0);
 	private Player comp1 = pList.get(1);

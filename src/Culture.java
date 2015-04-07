@@ -23,6 +23,8 @@ public class Culture {
 	// random action cards
 	private ArrayList<ActionCard> randomCards = new ArrayList<>();
 	
+	private Player player;
+	
 	
 	// constructor
 	public Culture() {
@@ -67,6 +69,14 @@ public class Culture {
 	// set random cards arrayList
 	public void setRandomCards(ArrayList<ActionCard> randomCards) {
 		this.randomCards = randomCards;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
 	// override the toString for printing

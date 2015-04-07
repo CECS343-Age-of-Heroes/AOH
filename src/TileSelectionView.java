@@ -338,7 +338,6 @@ public class TileSelectionView extends JPanel {
 	}
 	
 	// OPTION LISTENER // // // // // // // // // // // // // // // // // // //
-	
 	// action listener for buttons
 	private class OptionListener implements ActionListener
 	{   

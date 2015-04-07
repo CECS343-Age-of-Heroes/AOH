@@ -21,13 +21,15 @@ public class Player {
 	private Cubes cubes = new Cubes();			// cubes array 
 	// holds tile at correct index in production area
 	private ArrayList<Tile> tiles = new ArrayList<>();	
-	//private ArrayList<Card> randomCards = new ArrayList<>();
-	//private ArrayList<Card> perminantCards = new ArrayList<>();
+	//private ArrayList<ActionCard> permanentCards = new ArrayList<>();
+	//private ArrayList<ActionCard> randomCards = new ArrayList<>();
+	private ArrayList<ActionCard> actionCards = new ArrayList<>();
 	private int maxTiles = 16;		// max tiles that fit on a board
 	
 	// constructor
 	public Player() {
 		initTileList();
+		//setRandomCards();
 	}
 	
 	// sets up the players tile list with blank tiles to start
@@ -36,6 +38,15 @@ public class Player {
 			tiles.add(new Tile());
 		}
 	}
+	
+	public ArrayList<ActionCard> getActionCards() {
+		return actionCards;
+	}
+	
+	public void setActionCards(ArrayList<ActionCard> ac) {
+		this.actionCards = ac;
+	}
+	
 	
 	// get name
 	public String getName() {
@@ -63,6 +74,7 @@ public class Player {
 		else if (str == "Egyptian") {
 			culture = new Egyptian();
 		}
+		culture.setPlayer(this);		// set the cultures player 
 	}
 	
 	// return age

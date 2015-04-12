@@ -256,12 +256,12 @@ public class GamePlayView extends JPanel {
 						
 						permanentCards = tPlayer.getCulture().getPermanentCards();
 						randomCards = tPlayer.getCulture().getRandomCards();
-						
+						System.out.println(randomCards.indexOf(0));
 						
 						if (((JButton)e.getSource()).getText().equals("random deck")) {
 							System.out.println("Random Card");
 							int index = new Random().nextInt(randomCards.size());
-							
+							System.out.println();
 							//tPlayer.getActionCards().add(randomCards.get(index));						
 							tPlayer.getActionCards().add(randomCards.remove(index));
 						}

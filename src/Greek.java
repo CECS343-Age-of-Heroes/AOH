@@ -44,23 +44,43 @@ public class Greek extends Culture {
 
 	// initialize permanent action cards
 	private void initPermanentActionCards() {
-		getPermanentCards().add(new NextAgeCard("permanent1"));
-		getPermanentCards().add(new BuildCard("permanent2"));
-		getPermanentCards().add(new ExploreCard("permanent3"));
-		getPermanentCards().add(new GatherCard("permanent4"));
-		getPermanentCards().add(new TradeCard("permanent5"));
+		getPermanentCards().add(new NextAgeCard("NextAge 456"));
+		getPermanentCards().add(new BuildCard("Build 1"));
+		getPermanentCards().add(new ExploreCard("Explore 1"));
+		getPermanentCards().add(new GatherCard("Gather 1"));
+		getPermanentCards().add(new TradeCard("Trade 2"));
 	}
 	
 	private void initRandomActionCards() {
-		getRandomCards().add(new NextAgeCard("random0")); 
-		getRandomCards().add(new BuildCard("random1"));
-		getRandomCards().add(new ExploreCard("random2"));
-		getRandomCards().add(new GatherCard("random3"));
-		getRandomCards().add(new TradeCard("random4"));
-		getRandomCards().add(new NextAgeCard("random5")); 
-		getRandomCards().add(new BuildCard("random6"));
-		getRandomCards().add(new ExploreCard("random7"));
-		getRandomCards().add(new GatherCard("random8"));
-		getRandomCards().add(new TradeCard("random9"));
+		getRandomCards().add(new BuildCard("Build 4"));
+		getRandomCards().add(new BuildCard("Build 3"));
+		getRandomCards().add(new BuildCard("Build 3"));
+		getRandomCards().add(new BuildCard("Build 3"));
+		getRandomCards().add(new BuildCard("Build 2"));
+		getRandomCards().add(new BuildCard("Build 2"));
+		getRandomCards().add(new BuildCard("Build 3","Hera"));
+		getRandomCards().add(new ExploreCard("Explore 2"));
+		getRandomCards().add(new ExploreCard("Explore 2"));
+		getRandomCards().add(new ExploreCard("Explore 0"));
+		getRandomCards().add(new ExploreCard("Explore 0"));
+		getRandomCards().add(new ExploreCard("Explore 2","Artemis"));
+		getRandomCards().add(new GatherCard("Gather All"));
+		getRandomCards().add(new GatherCard("Gather All"));
+		getRandomCards().add(new GatherCard("Gather All"));
+		getRandomCards().add(new GatherCard("Gather All"));
+		getRandomCards().add(new GatherCard("Gather All"));
+		getRandomCards().add(new GatherCard("Gather 1","Poseidon"));
+		getRandomCards().add(new GatherCard("Gather 1","Hades"));
+		getRandomCards().add(new GatherCard("Gather 0","Dionysus"));
+		getRandomCards().add(new NextAgeCard("Next Age 345"));
+		getRandomCards().add(new NextAgeCard("Next Age 345"));
+		getRandomCards().add(new NextAgeCard("Next Age 345","Valcano"));
+		getRandomCards().add(new NextAgeCard("Next Age 345","Zeus"));
+		getRandomCards().add(new TradeCard("Trade 1"));
+		getRandomCards().add(new TradeCard("Trade 1"));
+		getRandomCards().add(new TradeCard("Trade 1"));
+		getRandomCards().add(new TradeCard("Trade 1"));
+		getRandomCards().add(new TradeCard("Trade 1"));
+		getRandomCards().add(new TradeCard("Trade 0","Hermes"));
 	}
 }

@@ -20,7 +20,7 @@ public class GameController {
 	// views: 
 	private ArrayList<Player> playersList = new ArrayList<>();
 	//private static GameTiles gameTiles;
-	private GameTiles gameTiles = new GameTiles(); // change to production tiles
+	private GameProductionTiles gameProductionTiles = new GameProductionTiles(); // change to production tiles
 	private Bank bank = new Bank();
 	private Player human = new Player();
 	private Player computer1 = new Player();
@@ -95,13 +95,13 @@ public class GameController {
 //	}
 	
 	//public static void addTile(Tile tile) {
-	public void addTile(Tile tile) {
-		gameTiles.add(tile);
+	public void addProductionTile(ProductionTile tile) {
+		gameProductionTiles.add(tile);
 	}
 	
 	//public static GameTiles getGameTiles() {
-	public GameTiles getGameTiles() {
-		return gameTiles;
+	public GameProductionTiles getGameProductionTiles() {
+		return gameProductionTiles;
 	}
 
 	// return the games bank object

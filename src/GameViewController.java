@@ -40,7 +40,7 @@ public class GameViewController extends JFrame {
 		startScreen = new StartScreen();
 		startScreen.startButton.addActionListener(new GameOptionListener());
 		
-		//add(new GamePlayView());
+//		add(new GamePlayView());
 		add(startScreen);
         pack();
         setVisible(true);

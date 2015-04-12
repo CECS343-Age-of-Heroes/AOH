@@ -78,6 +78,7 @@ public class GamePlayView extends JPanel {
 	}
 	
 	private void setupCardSelection() {
+		actionPanel.removeAll();
 		
 		actionPanel.setLayout(null);
 		actionPanel.setPreferredSize(new Dimension(300, 800));
@@ -96,17 +97,22 @@ public class GamePlayView extends JPanel {
 		
 		if (tPlayer.getActionCards().size() >= tPlayer.getAge()) {
 			System.out.println("**equal size - put done button up");
-			actionBodyPanel.removeAll();
+//			actionBodyPanel.removeAll();
 			
-			actionBodyPanel.setLayout(null);
+//			actionBodyPanel.setLayout(null);
+			actionBodyPanel.setBounds(0, 100, 300, 600);
+			actionBodyPanel.setBackground(Color.YELLOW);
 			
-			actionBodyPanel.add(new JButton("Done"));
+			JButton doneButton = new JButton("Done");
+			doneButton.setPreferredSize(new Dimension(200, 50));
+//			doneButton.setBounds(50, 100, 200, 50);
+			actionBodyPanel.add(doneButton);
 			
-			actionBodyPanel.revalidate();
-			actionBodyPanel.repaint();
+//			actionBodyPanel.revalidate();
+//			actionBodyPanel.repaint();
 		}
 		else {
-			actionBodyPanel.removeAll();
+//			actionBodyPanel.removeAll();
 			
 			actionBodyPanel.setLayout(new GridLayout(3,2));
 			actionBodyPanel.setBounds(0, 100, 300, 600);
@@ -143,12 +149,15 @@ public class GamePlayView extends JPanel {
 			//actionBodyPanel.add(randButton);
 			actionBodyPanel.add(buttonPanel);
 			
-			actionBodyPanel.revalidate();
-			actionBodyPanel.repaint();
+//			actionBodyPanel.revalidate();
+//			actionBodyPanel.repaint();
 		}
 		
 		actionPanel.add(actionHeaderPanel);
 		actionPanel.add(actionBodyPanel);
+		
+		actionPanel.revalidate();
+		actionPanel.repaint();
 	}
 	
 	// setup the bank panel
@@ -182,7 +191,7 @@ public class GamePlayView extends JPanel {
 		//System.out.println("GameTiles: " + GameController.getGameTiles().size());
 		//bankPanel.add(new JButton("Game Tiles #" + GameController.getGameTiles().size()));
 		//System.out.println("GameTiles: " + MainTemp.gc.getGameTiles().size());
-		JButton tiles = new JButton("Game Tiles #"+ Main.gc.getGameTiles().size());
+		JButton tiles = new JButton("Game Tiles #"+ Main.gc.getGameProductionTiles().size());
 		tiles.setPreferredSize(new Dimension(95, 95));
 		tiles.setFont(new Font("Default", Font.PLAIN, 10));
 		tiles.setEnabled(false);
@@ -285,7 +294,7 @@ public class GamePlayView extends JPanel {
 						System.out.println("RandCard Size: " + tPlayer.getCulture().getRandomCards().size());
 					}
 					
-					if (tPlayer.getActionCards().size() == tPlayer.getAge()) {
+					if (tPlayer.getActionCards().size() >= tPlayer.getAge()) {
 						setupCardSelection();
 						// update action panel here with message and button
 						// function call

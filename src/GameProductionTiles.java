@@ -1,6 +1,6 @@
 import java.util.*;
 /*
- * GameTiles:
+ * GameProductionTiles:
  * - represents the pool of game tiles available to every player as an ArrayList
  */
 /*
@@ -12,11 +12,12 @@ import java.util.*;
  */
 
 @SuppressWarnings("serial")
-public class GameTiles extends ArrayList<Tile> {
+//public class GameTiles extends ArrayList<Tile> {
+public class GameProductionTiles extends ArrayList<ProductionTile> {
 	
 	// constructor
-	public GameTiles() {
-		createSetOfGameTiles();
+	public GameProductionTiles() {
+		createSetOfGameProductionTiles();
 		shuffleTiles();
 	}
 	
@@ -31,7 +32,7 @@ public class GameTiles extends ArrayList<Tile> {
 	//}
 	
 	// put unused tiles back in the array after player selection, and shuffles
-	public void putUnusedTilesBack(ArrayList<Tile> unusedTiles) {
+	public void putUnusedProductionTilesBack(ArrayList<ProductionTile> unusedTiles) {
 		
 		for (int i = 0; i < unusedTiles.size(); i++) {
 			add(unusedTiles.remove(i));
@@ -40,88 +41,88 @@ public class GameTiles extends ArrayList<Tile> {
 	}
 	
 	// creates and adds all the possible game tiles
-	private void createSetOfGameTiles() {
+	private void createSetOfGameProductionTiles() {
 		// fertile x21
 		for (int i = 1; i <= 21; i++) {
 			if (i <= 12) {
-				add(new Tile("fertile", "green", 2));
+				add(new ProductionTile("fertile", "green", 2));
 			}
 			else if (i > 12 && i <= 15) {
-				add(new Tile("fertile", "brown", 1));
+				add(new ProductionTile("fertile", "brown", 1));
 			}
 			else if (i > 15 && i <= 18) {
-				add(new Tile("fertile", "blue", 1));
+				add(new ProductionTile("fertile", "blue", 1));
 			}
 			else if (i > 18 && i <= 21) {
-				add(new Tile("fertile", "yellow", 1));
+				add(new ProductionTile("fertile", "yellow", 1));
 			}
 		}
 		
 		// forest x 15
 		for (int i = 1; i <= 15; i++) {
 			if (i <= 9) {
-				add(new Tile("forest", "brown", 2));
+				add(new ProductionTile("forest", "brown", 2));
 			}
 			else if (i > 9 && i <= 11) {
-				add(new Tile("forest", "green", 1));
+				add(new ProductionTile("forest", "green", 1));
 			}
 			else if (i > 11 && i <= 13) {
-				add(new Tile("forest", "yellow", 1));
+				add(new ProductionTile("forest", "yellow", 1));
 			}
 			else if (i > 13 && i <= 15) {
-				add(new Tile("forest", "blue", 1));
+				add(new ProductionTile("forest", "blue", 1));
 			}
 		}
 		
 		// hill x16
 		for (int i = 1; i <= 16; i++) {
 			if (i <= 4) {
-				add(new Tile("hill", "yellow", 2));
+				add(new ProductionTile("hill", "yellow", 2));
 			}
 			else if (i > 4 && i <= 8) {
-				add(new Tile("hill", "green", 1));
+				add(new ProductionTile("hill", "green", 1));
 			}
 			else if (i > 8 && i <= 12) {
-				add(new Tile("hill", "brown", 1));
+				add(new ProductionTile("hill", "brown", 1));
 			}
 			else if (i > 12 && i <= 16) {
-				add(new Tile("hill", "blue", 1));
+				add(new ProductionTile("hill", "blue", 1));
 			}
 		}
 		
 		// mountain x12
 		for (int i = 1; i <= 12; i++) {
 			if (i <= 6) {
-				add(new Tile("mountain", "yellow", 2));
+				add(new ProductionTile("mountain", "yellow", 2));
 			}
 			else if (i > 6 && i <= 9) {
-				add(new Tile("mountain", "brown", 1));
+				add(new ProductionTile("mountain", "brown", 1));
 			}
 			else if (i > 9 && i <= 12) {
-				add(new Tile("mountain", "blue", 1));
+				add(new ProductionTile("mountain", "blue", 1));
 			}
 		}
 		
 		// desert x14
 		for (int i = 1; i <= 14; i++) {
 			if (i <= 7) {
-				add(new Tile("desert", "blue", 2));
+				add(new ProductionTile("desert", "blue", 2));
 			}
 			else if (i > 7 && i <= 14) {
-				add(new Tile("desert", "yellow", 1));
+				add(new ProductionTile("desert", "yellow", 1));
 			}
 		}
 		
 		// swamp x12
 		for (int i = 1; i <= 12; i++) {
 			if (i <= 4) {
-				add(new Tile("swamp", "brown", 1));
+				add(new ProductionTile("swamp", "brown", 1));
 			}
 			else if (i > 4 && i <= 8) {
-				add(new Tile("swamp", "green", 1));
+				add(new ProductionTile("swamp", "green", 1));
 			}
 			else if (i > 8 && i <= 12) {
-				add(new Tile("swamp", "blue", 1));
+				add(new ProductionTile("swamp", "blue", 1));
 			}
 		}
 	}

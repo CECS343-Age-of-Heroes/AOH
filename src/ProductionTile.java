@@ -10,21 +10,21 @@
  * FIX:
  * 	- change to production tile only ??
  */
-public class Tile {
+public class ProductionTile {
 
 	private String type;		// type of tile 
 	private String color;		// color of cube on the tile
 	private int value;			// number of cubes on the tile
 	
 	// constructor default		
-	public Tile() {
+	public ProductionTile() {
 		type = "";
 		color = "";
 		value = 0;
 	}
 	
 	// constructor with arguments
-	public Tile(String type, String color, int value) {
+	public ProductionTile(String type, String color, int value) {
 		this.setType(type);
 		this.setColor(color);
 		this.setValue(value);

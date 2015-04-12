@@ -20,7 +20,7 @@ public class Player {
 	private Integer age = 4;		// current age
 	private Cubes cubes = new Cubes();			// cubes array 
 	// holds tile at correct index in production area
-	private ArrayList<Tile> tiles = new ArrayList<>();	
+	private ArrayList<ProductionTile> productionTiles = new ArrayList<>();	
 	//private ArrayList<ActionCard> permanentCards = new ArrayList<>();
 	//private ArrayList<ActionCard> randomCards = new ArrayList<>();
 	private ArrayList<ActionCard> actionCards = new ArrayList<>();
@@ -28,14 +28,14 @@ public class Player {
 	
 	// constructor
 	public Player() {
-		initTileList();
+		initProductionTileList();
 		//setRandomCards();
 	}
 	
 	// sets up the players tile list with blank tiles to start
-	public void initTileList() {
+	public void initProductionTileList() {
 		for (int i = 0; i < maxTiles; i++) {
-			tiles.add(new Tile());
+			productionTiles.add(new ProductionTile());
 		}
 	}
 	
@@ -134,13 +134,13 @@ public class Player {
 	}
 
 	// return tiles
-	public ArrayList<Tile> getTiles() {
-		return tiles;
+	public ArrayList<ProductionTile> getProductionTiles() {
+		return productionTiles;
 	}
 
 	// set tiles
-	public void setTiles(ArrayList<Tile> tiles) {
-		this.tiles = tiles;
+	public void setProductionTiles(ArrayList<ProductionTile> tiles) {
+		this.productionTiles = tiles;
 	}
 
 	// return cubes

@@ -39,9 +39,9 @@ public class TileSelectionView extends JPanel {
 	private int numberOfTiles = 18; // number of tiles to pull/show
 	
 	// array of tiles pulled from game tiles
-	private ArrayList<Tile> tilesToPick = new ArrayList<>();
+	private ArrayList<ProductionTile> tilesToPick = new ArrayList<>();
 	// same ass tiles to pick but remove from this when a tile is used
-	private ArrayList<Tile> unusedTiles = new ArrayList<>();
+	private ArrayList<ProductionTile> unusedTiles = new ArrayList<>();
 	// array of buttons that can be selected
 	private ArrayList<JButton> buttonsToPick = new ArrayList<>();
 	// panel with 3 players and their production areas
@@ -63,7 +63,7 @@ public class TileSelectionView extends JPanel {
 		
 		// setup
 		setupPlayerPanel();
-		getInitialTiles();
+		getInitialProductionTiles();
 		initialTilePanel();
 		
 		add(playerTilesPanel);
@@ -72,11 +72,11 @@ public class TileSelectionView extends JPanel {
 	
 	// SETUP // // // // // // // // // // // // // // // // // // // // // // 
 	// removes 18 tiles from the GameTiles ArrayList
-	private void getInitialTiles() {
+	private void getInitialProductionTiles() {
 		for (int i = 0; i < numberOfTiles; i++) {
 			//Tile t = GameController.removeGameTile();
 			// removes a tile from game tiles,
-			Tile t = gc.getGameTiles().remove(0);
+			ProductionTile t = gc.getGameProductionTiles().remove(0);
 			// adds it to tiles to pick and unused tiles
 			tilesToPick.add(t);
 		    unusedTiles.add(t);
@@ -125,16 +125,16 @@ public class TileSelectionView extends JPanel {
 		playerTilesPanel.setBounds(0, 0, 400, 800);
 		playerTilesPanel.setBackground(Color.GREEN);
 		
-		updatePlayerPanel(p1Panel, p1, new Tile());
-		updatePlayerPanel(p2Panel, p2, new Tile());
-		updatePlayerPanel(p3Panel, p3, new Tile());
+		updatePlayerPanel(p1Panel, p1, new ProductionTile());
+		updatePlayerPanel(p2Panel, p2, new ProductionTile());
+		updatePlayerPanel(p3Panel, p3, new ProductionTile());
 		
 		playerTilesPanel.add(p1Panel);
 		playerTilesPanel.add(p2Panel);
 		playerTilesPanel.add(p3Panel);
 	}
 
-	private void updatePlayerPanel(JPanel pPanel, Player player, Tile tile) {
+	private void updatePlayerPanel(JPanel pPanel, Player player, ProductionTile tile) {
 		pPanel.removeAll();
 		pPanel.setLayout(null);
 		
@@ -158,11 +158,11 @@ public class TileSelectionView extends JPanel {
 	}
 	
 	//
-	private JPanel setupPlayerProductionArea(Player player, Tile tile) { 
+	private JPanel setupPlayerProductionArea(Player player, ProductionTile tile) { 
 		// production area list of spots
 		ArrayList<String> list = player.getCulture().getProductionAreaList();
 		// production area tiles list
-		ArrayList<Tile> tilesList = player.getTiles();
+		ArrayList<ProductionTile> tilesList = player.getProductionTiles();
 		
 		// check if production list has a spot for the selected tile
 		// if it does then it removes the empty tile at that index and 
@@ -226,7 +226,7 @@ public class TileSelectionView extends JPanel {
 		tilesPanel.removeAll();
 		tilesPanel.setLayout(new GridLayout(5, 5));
 		
-		for (Tile tile : tilesToPick) {
+		for (ProductionTile tile : tilesToPick) {
 			JButton tileButton = new JButton();
 			tileButton.addActionListener(new OptionListener());
 			tileButton.setLayout(new BorderLayout());
@@ -293,7 +293,7 @@ public class TileSelectionView extends JPanel {
 	}
 	
 	// returns if the selected tile exist and is open on a players prod board
-	private boolean checkIfValidTileSelection(Player p, Tile tile, JButton b) {
+	private boolean checkIfValidTileSelection(Player p, ProductionTile tile, JButton b) {
 		ArrayList<String> list = p.getCulture().getProductionAreaList();
 		if (list.contains(tile.getType())) {
 			unusedTiles.remove(tile);
@@ -330,9 +330,9 @@ public class TileSelectionView extends JPanel {
 		
 		//System.out.println("Unused Tiles Size: " + unusedTiles.size());
 		// put unselected tiles back into the GameTiles
-		for (Tile tile : unusedTiles) {
+		for (ProductionTile tile : unusedTiles) {
 			//GameController.addTile(tile);
-			gc.addTile(tile);
+			gc.addProductionTile(tile);
 			//System.out.println("adding back tile");
 		}
 	}
@@ -361,7 +361,7 @@ public class TileSelectionView extends JPanel {
 				}
 				else {
 					int buttonIndex = buttonsToPick.indexOf(e.getSource());
-					Tile clickTile = tilesToPick.get(buttonIndex);
+					ProductionTile clickTile = tilesToPick.get(buttonIndex);
 					JButton button = ((JButton)e.getSource());
 					
 					int turn = count % 6;

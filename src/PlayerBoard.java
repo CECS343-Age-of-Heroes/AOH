@@ -55,8 +55,8 @@ public class PlayerBoard extends JPanel {
 	// setup the production area
 	private JPanel setupPlayerProductionArea(Player player) {
 			
-		ArrayList<String> list = player.getCulture().getProductionAreaList();
-		ArrayList<Tile> tileList = player.getTiles();
+		ArrayList<String> productionList = player.getCulture().getProductionAreaList();
+		ArrayList<ProductionTile> productionTileList = player.getProductionTiles();
 				
 		JPanel productionPanel = new JPanel();
 		productionPanel.setLayout(new GridLayout(4,4));
@@ -64,26 +64,26 @@ public class PlayerBoard extends JPanel {
 		productionPanel.setBackground(Color.GRAY);
 		
 		// 
-		for (int i = 0; i < tileList.size(); i++) {
+		for (int i = 0; i < productionTileList.size(); i++) {
 			// text for panel or button in each square
 			JTextArea title = new JTextArea();
 			title.setEditable(false);
 			//title.setOpaque(true);
-			title.setFont(new Font("SansSerif", Font.PLAIN, 8));
+			title.setFont(new Font("Default", Font.PLAIN, 8));
 			
 			//JPanel tp = new JPanel();
 			//JButton tp = new JButton();
 			JComponent tp;
 			
-			if (tileList.get(i).getType() == "") {		// no tile
+			if (productionTileList.get(i).getType() == "") {		// no tile
 				tp = new JPanel();
-				title.setText(list.get(i));
+				title.setText(productionList.get(i));
 				tp.setBackground(Color.DARK_GRAY);
 			}
 			//else if (tileList.get(i).getType() == list.get(i)) {
 			else { 										// tile exist here
 				tp = new JButton();
-				title.setText(tileList.get(i).toString());
+				title.setText(productionTileList.get(i).toString());
 				tp.setBackground(Color.ORANGE);
 			}
 						

@@ -52,7 +52,7 @@ public class Greek extends Culture {
 	}
 	
 	private void initRandomActionCards() {
-		getRandomCards().add(new NextAgeCard("random0")); 
+		getRandomCards().add(new NextAgeCard("random0"));
 		getRandomCards().add(new BuildCard("random1"));
 		getRandomCards().add(new ExploreCard("random2"));
 		getRandomCards().add(new GatherCard("random3"));
@@ -63,4 +63,5 @@ public class Greek extends Culture {
 		getRandomCards().add(new GatherCard("random8"));
 		getRandomCards().add(new TradeCard("random9"));
 	}
+	
 }

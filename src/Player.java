@@ -65,13 +65,13 @@ public class Player {
 
 	// sets culture based on radio button selected on StartScreenView
 	public void setCulture(String str) {
-		if (str == "Greek") {
+		if (str.equals("Greek")) {
 			culture = new Greek();
 		}
-		else if (str == "Norse") {
+		else if (str.equals("Norse")) {
 			culture = new Norse();
 		}
-		else if (str == "Egyptian") {
+		else if (str.equals("Egyptian")) {
 			culture = new Egyptian();
 		}
 		culture.setPlayer(this);		// set the cultures player 

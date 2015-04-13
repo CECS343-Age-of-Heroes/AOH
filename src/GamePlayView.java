@@ -26,7 +26,7 @@ public class GamePlayView extends JPanel {
 	private JPanel bankPanel = new JPanel();
 	private JPanel cardPanel = new JPanel();
 	private JPanel actionPanel = new JPanel();
-	
+	private GameController testing;
 	// array list of cultures action cards, changes with each player
 	private ArrayList<ActionCard> permanentCards;
 	private ArrayList<ActionCard> randomCards;
@@ -34,16 +34,14 @@ public class GamePlayView extends JPanel {
 	
 	private Player tPlayer = new Player();	// temp player for testing
 	
-	
 	// constructor
 	public GamePlayView() {
 		setLayout(null);
 		//setPreferredSize(new Dimension(1200, 822));
 		setBackground(Color.ORANGE);
-        
+        tPlayer = testing.getPlayersList().get(testing.getHumanIndex());
 		// temp player
-        tPlayer.setName("MH");
-        tPlayer.setCulture("Greek");
+        // tPlayer.setName("MH");
         //tPlayer.setAge(7);
         //System.out.println("Name: " + tPlayer.getName());
         //System.out.println("Culture: " + tPlayer.getCulture().getName());
@@ -261,7 +259,7 @@ public class GamePlayView extends JPanel {
 						if (((JButton)e.getSource()).getText().equals("random deck")) {
 							System.out.println("Random Card");
 							int index = new Random().nextInt(randomCards.size());
-							System.out.println();
+							System.out.println(randomCards.get(index).type);
 							//tPlayer.getActionCards().add(randomCards.get(index));						
 							tPlayer.getActionCards().add(randomCards.remove(index));
 						}

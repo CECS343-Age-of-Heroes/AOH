@@ -77,7 +77,8 @@ public class Culture {
 
 	// get random cards arrayList
 	public ArrayList<ActionCard> getRandomCards() {
-		if(getName().equals("Egyptian"))
+		System.out.println(getName());
+		if(getName().equals("Egyptian"))	
 			return egyptRandomCards;
 		else if(getName().equals("Greek"))
 			return greekRandomCards;

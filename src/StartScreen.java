@@ -18,7 +18,8 @@ public class StartScreen extends JPanel {
 	// get the player list from game controller
 	private ArrayList<Player> pList = Main.gc.getPlayersList();
 	// var for each player
-	private Player human = pList.get(0);
+	//private Player human = pList.get(0);
+	private Player human = Main.gc.getHuman();
 	private Player comp1 = pList.get(1);
 	private Player comp2 = pList.get(2);
 	// main panel to hold labels and buttons

@@ -10,10 +10,24 @@
  */
 @SuppressWarnings("serial")
 public class TradeCard extends ActionCard {
-
-	public TradeCard(String aType) {
+	
+	private int tradeCost = 0;
+	
+	
+	// constructor
+	public TradeCard(int cost) {
 		setName("Trade");
-		setType(aType);
+		tradeCost = cost;
 	}
 
+	
+	// return the number of resources this card is aloud to take
+	public int getTradeCost() {
+		return tradeCost;
+	}
+	
+	@Override
+	public String toString() {
+		return getName() + " " + tradeCost;
+	}
 }

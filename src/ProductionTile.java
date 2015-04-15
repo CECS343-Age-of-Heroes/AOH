@@ -1,5 +1,5 @@
 /*
- * Tile:
+ * ProductionTile:
  * - represents a tile in the game
  * - the type of the tile and the color and value of the cube printed on the 
  *   tile
@@ -8,7 +8,7 @@
  * ADD:
  * 	-
  * FIX:
- * 	- change to production tile only ??
+ * 	- 
  */
 public class ProductionTile {
 

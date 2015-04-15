@@ -11,10 +11,24 @@
 @SuppressWarnings("serial")
 public class GatherCard extends ActionCard {
 
+	private String resourceType = "";		// 1/one or All
+	
+	
 	// constructor
-	public GatherCard(String theType) {
+	public GatherCard(String resources) {
 		setName("Gather");
-		setType(theType);
+		resourceType = resources;
 	}
-
+	
+	
+	// return the number of resources this card is aloud to take
+	public String getResourceType() {
+		return resourceType;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return getName() + " " + resourceType;
+	}
 }

@@ -9,7 +9,7 @@ import java.util.*;
  * ADD:
  * 	-
  * FIX:
- * 	- change: setProductionList -> setProductionAreaList   (if needed anywhere)
+ * 	- 
  */
 
 public class Culture {
@@ -47,7 +47,7 @@ public class Culture {
 	}
 
 	// sets the production area list
-	public void setProductionList(ArrayList<String> productionAreaList) {
+	public void setProductionAreaList(ArrayList<String> productionAreaList) {
 		this.productionAreaList = productionAreaList;
 	}
 

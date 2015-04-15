@@ -16,11 +16,11 @@ import java.util.*;
 
 public class GameController {
 
-	// data: Bank, tiles, cards?
+	// data: Bank, tiles, ??
 	// views: 
 	private ArrayList<Player> playersList = new ArrayList<>();
-	//private static GameTiles gameTiles;
-	private GameProductionTiles gameProductionTiles = new GameProductionTiles(); // change to production tiles
+	private GameProductionTiles gameProductionTiles = new GameProductionTiles();
+	private GameBuildingTiles gameBuildingTiles = new GameBuildingTiles();
 	private Bank bank = new Bank();
 	private Player human = new Player();
 	private Player computer1 = new Player();
@@ -28,7 +28,6 @@ public class GameController {
 	
 	// constructor
 	public GameController() {
-		
 		initPlayersList();
 	}
 
@@ -70,9 +69,12 @@ public class GameController {
 		playersList.add(computer2);
 	}
 	
-	// 
-	public void updateStartingPlayer() {
-		
+	// rotate starting player
+	public void rotateStartingPlayer() {
+		Player temp = playersList.get(0);
+		playersList.set(0, playersList.get(1));
+		playersList.set(1, playersList.get(2));
+		playersList.set(2, temp);
 	}
 	
 	
@@ -85,23 +87,30 @@ public class GameController {
 		return playersList;
 	}
 	
+	// returns the human player
+	public Player getHuman() {
+		return human;
+	}
+	
 	// returns the index of the human player in the array
 	public int getHumanIndex() {
 		return playersList.indexOf(human);
 	}
 	
-//	public static Tile removeGameTile() {
-//		return gameTiles.remove(0);
-//	}
-	
+	// should be able to do this in the class using it (passed by reference)
 	//public static void addTile(Tile tile) {
 	public void addProductionTile(ProductionTile tile) {
 		gameProductionTiles.add(tile);
 	}
 	
-	//public static GameTiles getGameTiles() {
+	//
 	public GameProductionTiles getGameProductionTiles() {
 		return gameProductionTiles;
+	}
+	
+	//
+	public GameBuildingTiles getGameBuildingTiles() {
+		return gameBuildingTiles;
 	}
 
 	// return the games bank object
@@ -109,8 +118,5 @@ public class GameController {
 		return bank;
 	}
 
-//	public void setBank(Bank bank) {		// shouldnt need
-//		this.bank = bank;
-//	}
-		
+	
 }

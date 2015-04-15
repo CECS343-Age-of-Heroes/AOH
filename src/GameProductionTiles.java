@@ -8,11 +8,9 @@ import java.util.*;
  * 	- 
  * 
  * FIX:
- * 	- change to game production tiles
+ * 	-
  */
-
 @SuppressWarnings("serial")
-//public class GameTiles extends ArrayList<Tile> {
 public class GameProductionTiles extends ArrayList<ProductionTile> {
 	
 	// constructor

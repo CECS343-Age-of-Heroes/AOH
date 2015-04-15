@@ -11,9 +11,21 @@
 @SuppressWarnings("serial")
 public class ExploreCard extends ActionCard {
 	
+	private int numOfTiles = 0;		// 3,4,5
+	
 	// constructor
-	public ExploreCard(String theType) {
+	public ExploreCard(int tiles) {
 		setName("Explore");
-		setType(theType);
-	}	
+		numOfTiles = tiles;
+	}
+	
+	// return the number of tiles this card is aloud to draw
+	public int getNumOfTiles() {
+		return numOfTiles;
+	}
+	
+	@Override
+	public String toString() {
+		return getName() + " " + numOfTiles;
+	}
 }

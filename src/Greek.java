@@ -44,24 +44,39 @@ public class Greek extends Culture {
 
 	// initialize permanent action cards
 	private void initPermanentActionCards() {
-		getPermanentCards().add(new NextAgeCard("permanent1"));
-		getPermanentCards().add(new BuildCard("permanent2"));
-		getPermanentCards().add(new ExploreCard("permanent3"));
-		getPermanentCards().add(new GatherCard("permanent4"));
-		getPermanentCards().add(new TradeCard("permanent5"));
+		getPermanentCards().add(new NextAgeCard(456));
+		getPermanentCards().add(new BuildCard(1));
+		getPermanentCards().add(new ExploreCard(4));
+		getPermanentCards().add(new GatherCard("type"));
+		getPermanentCards().add(new TradeCard(2));
 	}
 	
+	// initalize random action cards
 	private void initRandomActionCards() {
-		getRandomCards().add(new NextAgeCard("random0"));
-		getRandomCards().add(new BuildCard("random1"));
-		getRandomCards().add(new ExploreCard("random2"));
-		getRandomCards().add(new GatherCard("random3"));
-		getRandomCards().add(new TradeCard("random4"));
-		getRandomCards().add(new NextAgeCard("random5")); 
-		getRandomCards().add(new BuildCard("random6"));
-		getRandomCards().add(new ExploreCard("random7"));
-		getRandomCards().add(new GatherCard("random8"));
-		getRandomCards().add(new TradeCard("random9"));
+		// next age
+		getRandomCards().add(new NextAgeCard(345));
+		getRandomCards().add(new NextAgeCard(345));
+		// build
+		getRandomCards().add(new BuildCard(2));
+		getRandomCards().add(new BuildCard(2));
+		for (int i = 0; i < 3; i++) {
+			getRandomCards().add(new BuildCard(3));
+		}
+		getRandomCards().add(new BuildCard(4));
+		// explore
+		for (int i = 0; i < 2; i++) {
+			getRandomCards().add(new ExploreCard(5));
+			getRandomCards().add(new ExploreCard(3));
+		}
+		// gather
+		for (int i = 0; i < 5; i++) {
+			getRandomCards().add(new GatherCard("All"));
+		}
+		// trade
+		for (int i = 0; i < 5; i++) {
+			getRandomCards().add(new TradeCard(1));
+		}
+		
 	}
 	
 }

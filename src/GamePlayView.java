@@ -20,7 +20,8 @@ import javax.swing.*;
 public class GamePlayView extends JPanel {
 
 	private Bank bank = Main.gc.getBank();			// reference to games bank
-
+	private ArrayList<Player> pList = Main.gc.getPlayersList();
+	
 	private JPanel gameBoardsPanel = new GameBoards();	// change back after testing
 //	private JPanel gameBoardsPanel = new JPanel();
 	private JPanel bankPanel = new JPanel();
@@ -32,7 +33,7 @@ public class GamePlayView extends JPanel {
 	private ArrayList<ActionCard> randomCards;
 	private ArrayList<JButton> buttonsList = new ArrayList<>();
 	
-	private Player tPlayer = new Player();	// temp player for testing
+	private Player human = Main.gc.getHuman();
 	
 	
 	// constructor
@@ -42,11 +43,10 @@ public class GamePlayView extends JPanel {
 		setBackground(Color.ORANGE);
         
 		// temp player
-        tPlayer.setName("MH");
-        tPlayer.setCulture("Greek");
-        //tPlayer.setAge(7);
-        //System.out.println("Name: " + tPlayer.getName());
-        //System.out.println("Culture: " + tPlayer.getCulture().getName());
+//		human.setName("MH");
+//		human.setCulture("Greek");
+//        System.out.println("Name: " + tPlayer.getName());
+//        System.out.println("Culture: " + tPlayer.getCulture().getName());
 		
 		setupActionPanel();
 		setupBankPanel();
@@ -95,7 +95,7 @@ public class GamePlayView extends JPanel {
 		
 		JPanel actionBodyPanel = new JPanel();
 		
-		if (tPlayer.getActionCards().size() >= tPlayer.getAge()) {
+		if (human.getActionCards().size() >= human.getAge()) {
 			System.out.println("**equal size - put done button up");
 //			actionBodyPanel.removeAll();
 			
@@ -121,12 +121,12 @@ public class GamePlayView extends JPanel {
 			Dimension cardDim = new Dimension(105, 150);
 			
 			// retrieve the players cultures possible permanent cards
-			for (ActionCard ac : tPlayer.getCulture().getPermanentCards()) {
+			for (ActionCard ac : human.getCulture().getPermanentCards()) {
 				JPanel buttonPanel = new JPanel();
 				buttonPanel.setOpaque(false);
 				
 				JButton button = new JButton();
-				button.setText(ac.getName());
+				button.setText(ac.toString());
 				button.setPreferredSize(cardDim);
 				button.addActionListener(new OptionListener());
 				buttonsList.add(button);
@@ -226,14 +226,16 @@ public class GamePlayView extends JPanel {
 		
 		Dimension cardDim = new Dimension(68, 95);
 		
-		for (ActionCard ac : tPlayer.getActionCards()) {
+		for (ActionCard ac : human.getActionCards()) {
 			
 			((JButton)ac).setMaximumSize(cardDim);
 //			((JButton)ac).setSize(cardDim);
 //			((JButton)ac).setPreferredSize(cardDim);
 //			((JButton)ac).setMinimumSize(cardDim);
 			//ac.setMaximumSize(cardDim);
-			ac.setText(ac.getName());
+			
+			ac.setText(ac.toString());
+			ac.setFont(new Font("Default", Font.PLAIN, 10));
 			cardPanel.add((JButton)ac);
 			
 //			aCard.setMaximumSize(cardDim);
@@ -256,15 +258,15 @@ public class GamePlayView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			
 				if (e.getSource() instanceof JButton) {
-					System.out.println("---player age = " + tPlayer.getAge());
-					System.out.println("player ac size = " + tPlayer.getActionCards().size());
+					System.out.println("---player age = " + human.getAge());
+					System.out.println("player ac size = " + human.getActionCards().size());
 					
-					if (tPlayer.getActionCards().size() < tPlayer.getAge()) {
+					if (human.getActionCards().size() < human.getAge()) {
 						// remove card from perm/rand cultures array list
 						// add card to players action card array list
 						
-						permanentCards = tPlayer.getCulture().getPermanentCards();
-						randomCards = tPlayer.getCulture().getRandomCards();
+						permanentCards = human.getCulture().getPermanentCards();
+						randomCards = human.getCulture().getRandomCards();
 						
 						
 						if (((JButton)e.getSource()).getText().equals("random deck")) {
@@ -272,7 +274,7 @@ public class GamePlayView extends JPanel {
 							int index = new Random().nextInt(randomCards.size());
 							
 							//tPlayer.getActionCards().add(randomCards.get(index));						
-							tPlayer.getActionCards().add(randomCards.remove(index));
+							human.getActionCards().add(randomCards.remove(index));
 						}
 						else {
 							System.out.println("Permanent Card");
@@ -281,7 +283,7 @@ public class GamePlayView extends JPanel {
 							
 							// not the best or when discarding just remove from 
 							// players action array
-							tPlayer.getActionCards().add(permanentCards.get(index));
+							human.getActionCards().add(permanentCards.get(index));
 							//tPlayer.getActionCards().add(permanentCards.remove(index));
 							((JButton)e.getSource()).setEnabled(false);
 						}
@@ -289,12 +291,12 @@ public class GamePlayView extends JPanel {
 						//((JButton)e.getSource()).setEnabled(false);
 						setupCardPanel();
 						
-						System.out.println("Player ActCard Size: " + tPlayer.getActionCards().size());
-						System.out.println("PermCard Size: " + tPlayer.getCulture().getPermanentCards().size());
-						System.out.println("RandCard Size: " + tPlayer.getCulture().getRandomCards().size());
+						System.out.println("Player ActCard Size: " + human.getActionCards().size());
+						System.out.println("PermCard Size: " + human.getCulture().getPermanentCards().size());
+						System.out.println("RandCard Size: " + human.getCulture().getRandomCards().size());
 					}
 					
-					if (tPlayer.getActionCards().size() >= tPlayer.getAge()) {
+					if (human.getActionCards().size() >= human.getAge()) {
 						setupCardSelection();
 						// update action panel here with message and button
 						// function call

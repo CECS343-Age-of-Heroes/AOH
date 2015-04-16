@@ -258,6 +258,7 @@ public class GamePlayView extends JPanel {
 							System.out.println("Random Card");
 							int index = new Random().nextInt(randomCards.size());
 							System.out.println(randomCards.get(index).type);
+							System.out.println(randomCards.get(index).getName());
 							//tPlayer.getActionCards().add(randomCards.get(index));						
 							tPlayer.getActionCards().add(randomCards.remove(index));
 						}

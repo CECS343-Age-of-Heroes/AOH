@@ -19,12 +19,12 @@ public class NextAgeCard extends ActionCard {
 	// constructor
 	public NextAgeCard(String aType) {
 		setName(aType);
-		setType(aType);
+		setType("random");
 		//findCost();
 	}
 	public NextAgeCard(String a, String b){
 		setName(a+" "+b);
-		setType(b);
+		setType("god");
 	}
 	// might need to call this from player class or when playing the card
 	// returns the cost of each resource type from a players current age

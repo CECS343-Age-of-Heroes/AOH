@@ -13,11 +13,11 @@ public class TradeCard extends ActionCard {
 
 	public TradeCard(String aType) {
 		setName(aType);
-		setType(aType);
+		setType("random");
 	}
 	public TradeCard(String a, String b){
 		setName(a+" "+b);
-		setType(b);
+		setType("god");
 	}
 
 }

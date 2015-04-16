@@ -23,6 +23,7 @@ public class PlayerBoard extends JPanel {
 		JPanel holdingArea = new JPanel();
 		holdingArea.setBackground(Color.gray);
 		holdingArea.add(new JLabel(player.getCubes().toString()));
+		holdingArea.add(new JLabel(player.getName() + " #" + player.getPlace()));
 		
 		JPanel bottomArea = new JPanel();
 		bottomArea.setLayout(new GridLayout(1,2));

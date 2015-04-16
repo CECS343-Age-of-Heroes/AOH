@@ -21,8 +21,7 @@ public class Player {
 	private Cubes cubes = new Cubes();			// cubes array 
 	// holds tile at correct index in production area
 	private ArrayList<ProductionTile> productionTiles = new ArrayList<>();	
-	//private ArrayList<ActionCard> permanentCards = new ArrayList<>();
-	//private ArrayList<ActionCard> randomCards = new ArrayList<>();
+	private ArrayList<BuildingTile> buildingTiles = new ArrayList<>();
 	private ArrayList<ActionCard> actionCards = new ArrayList<>();
 	private int maxTiles = 16;		// max tiles that fit on a board
 	
@@ -151,6 +150,15 @@ public class Player {
 	// set cubes		// needed ??
 	public void setCubes(Cubes cubes) {
 		this.cubes = cubes;
+	}
+
+
+	public ArrayList<BuildingTile> getBuildingTiles() {
+		return buildingTiles;
+	}
+
+	public void setBuildingTiles(ArrayList<BuildingTile> buildingTiles) {
+		this.buildingTiles = buildingTiles;
 	}
 
 

@@ -75,6 +75,12 @@ public class Egyptian extends Culture {
 		for (int i = 0; i < 6; i++) {
 			getRandomCards().add(new TradeCard(1));
 		}
+		getRandomCards().add(new BuildCard(3,"Nephthys"));
+		getRandomCards().add(new BuildCard(3,"Horus"));
+		getRandomCards().add(new ExploreCard(5,"Ptah"));
+		getRandomCards().add(new GatherCard("food","Ra"));
+		getRandomCards().add(new NextAgeCard(345,"Set"));
+		getRandomCards().add(new NextAgeCard(345,"Hathor"));
 		
 	}
 

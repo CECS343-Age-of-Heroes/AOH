@@ -12,12 +12,17 @@
 public class TradeCard extends ActionCard {
 	
 	private int tradeCost = 0;
-	
+	private String godName = "";
 	
 	// constructor
 	public TradeCard(int cost) {
 		setName("Trade");
 		tradeCost = cost;
+	}
+	public TradeCard(int cost, String name){
+		setName("Trade");
+		tradeCost = cost;
+		godName = name;
 	}
 
 	
@@ -28,6 +33,6 @@ public class TradeCard extends ActionCard {
 	
 	@Override
 	public String toString() {
-		return getName() + " " + tradeCost;
+		return getName() + " " + tradeCost + " " + godName;
 	}
 }

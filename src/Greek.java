@@ -76,7 +76,14 @@ public class Greek extends Culture {
 		for (int i = 0; i < 5; i++) {
 			getRandomCards().add(new TradeCard(1));
 		}
-		
+		getRandomCards().add(new TradeCard(0,"Hermes"));
+		getRandomCards().add(new BuildCard(3,"Hera"));
+		getRandomCards().add(new ExploreCard(5,"Artemis"));
+		getRandomCards().add(new GatherCard("type","Poseidon"));
+		getRandomCards().add(new GatherCard("type","Hades"));
+		getRandomCards().add(new GatherCard("food","Dionysus"));
+		getRandomCards().add(new NextAgeCard(345,"Hephaestos"));
+		getRandomCards().add(new NextAgeCard(345,"Zeus"));
 	}
 	
 }

@@ -80,7 +80,14 @@ public class Norse extends Culture {
 		for (int i = 0; i < 4; i++) {
 			getRandomCards().add(new TradeCard(1));
 		}
-		
+		getRandomCards().add(new TradeCard(0,"Forseti"));
+		getRandomCards().add(new TradeCard(0,"Loki"));
+		getRandomCards().add(new BuildCard(4,"Njord"));
+		getRandomCards().add(new ExploreCard(3,"Baldr"));
+		getRandomCards().add(new GatherCard("type","Thor"));
+		getRandomCards().add(new GatherCard("type","Freyia"));
+		getRandomCards().add(new GatherCard("type","Skadi"));
+		getRandomCards().add(new NextAgeCard(345,"Odin"));
 	}
 	
 }

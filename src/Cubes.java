@@ -23,11 +23,64 @@ public class Cubes extends ArrayList<Integer> {
 	
 	// constructor
 	public Cubes() {
-		add(green);
 		add(blue);
+		add(green);
 		add(brown);
 		add(yellow);
 		add(red);
+	}
+	
+	// constructor
+	public Cubes(Integer blues, Integer greens, Integer browns, 
+				 Integer yellows, Integer reds) {
+		blue = blues;
+		green = greens;
+		brown = browns;
+		yellow = yellows;
+		red = reds;
+	}
+	
+	//
+	public void setCubes(int numBlue, int numGreen, int numBrown, int numYellow) {
+		blue = numBlue;
+		green = numGreen;
+		brown = numBrown;
+		yellow = numYellow;
+	}
+	
+	// add a value to a color of cube
+	public void addToColor(String color, int value) {
+		if (color.equals("blue")) {
+			setBlue(getBlue() + value);
+		}
+		else if (color.equals("green")) {
+			setGreen(getGreen() + value);
+		}
+		else if (color.equals("brown")) {
+			setBrown(getBrown() + value);
+		}
+		else if (color.equals("yellow")) {
+			setYellow(getYellow() + value);
+		}
+		else if (color.equals("red")) {
+			setRed(getRed() + value);
+		}
+	}
+	
+	//
+	public void addCubesToCubes(Cubes otherCubes) {
+		blue += otherCubes.getBlue();
+		green += otherCubes.getGreen();
+		brown += otherCubes.getBrown();
+		yellow += otherCubes.getYellow();
+	}
+	
+	//
+	public void removeCubesFromCubes(Cubes otherCubes) {
+		blue -= otherCubes.getBlue();
+		green -= otherCubes.getGreen();
+		brown -= otherCubes.getBrown();
+		yellow -= otherCubes.getYellow();
 	}
 	
 	// get and set green
@@ -78,12 +131,37 @@ public class Cubes extends ArrayList<Integer> {
 	// override toString() to print
 	public String toString() {
 		String str = "";
-		str += "Green: " + getGreen() + " \n";
 		str += "Blue: " + getBlue() + "\n";
+		str += "Green: " + getGreen() + " \n";
 		str += "Brown: " + getBrown() + " \n";
 		str += "Yellow: " + getYellow() + " \n";
 		str += "Red: " + getRed() + " \n";
 		return str;
 	}
 		
+	//
+	public String costToString() {
+		String str = "";
+		if (blue != 0) {
+			//str += "Blue: " + getBlue() + "\n";
+			str += "B:" + getBlue() + "\n";
+		}
+		if (green != 0) {
+			//str += "Green: " + getGreen() + " \n";
+			str += "G:" + getGreen() + " \n";
+		}
+		if (brown != 0) {
+			//str += "Brown: " + getBrown() + " \n";
+			str += "B:" + getBrown() + " \n";
+		}
+		if (yellow != 0) {
+			//str += "Yellow: " + getYellow() + " \n";
+			str += "Y:" + getYellow() + " \n";
+		}
+		if (red != 0) {
+			//str += "Red: " + getRed() + " \n";
+			str += "R:" + getRed() + " \n";
+		}
+		return str;
+	}
 }

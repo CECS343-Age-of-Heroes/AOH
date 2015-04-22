@@ -31,20 +31,8 @@ public class PlayerBoard extends JPanel {
 		
 		// production tiles
 		JPanel productionArea = setupPlayerProductionArea(player);
-		productionArea.setLayout(new GridLayout(4, 4));
-		productionArea.setBackground(Color.GREEN);
-		
 		// buildings
-		JPanel cityArea = new JPanel();
-		cityArea.setLayout(new GridLayout(4, 4));
-		cityArea.setBackground(Color.ORANGE);
-		
-		// temp buildings
-		for (int x = 0; x < 16; x++) {
-			JButton bb = new JButton();
-			bb.setText(Integer.toString(x));
-			cityArea.add(bb);
-		}
+		JPanel cityArea = setupPlayerCityArea(player);
 		
 		// add components
 		bottomArea.add(productionArea);
@@ -52,6 +40,47 @@ public class PlayerBoard extends JPanel {
 		add(holdingArea);
 		add(bottomArea);
 	}
+	
+	//
+	private JPanel setupPlayerCityArea(Player player) {
+		ArrayList<BuildingTile> buildingTiles = player.getBuildingTiles();
+		
+		//BuildingTile temp = new BuildingTile("House", new Cubes());
+		//buildingTiles.add(temp);
+		
+		JPanel cityPanel = new JPanel();
+		cityPanel.setLayout(new GridLayout(4,4));
+		cityPanel.setBounds(134, 0, 267, 267);
+		cityPanel.setBackground(Color.GRAY);
+		
+		// 
+		int numSquares = 16;
+		for (int i = 0; i < buildingTiles.size(); i++) {
+			// text for panel or button in each square
+			JTextArea title = new JTextArea();
+			title.setEditable(false);
+			title.setOpaque(true);
+			title.setFont(new Font("Default", Font.PLAIN, 8));
+			
+			JButton tp = new JButton();
+			title.setText(buildingTiles.get(i).getName());
+			tp.setText(buildingTiles.get(i).getName());
+			//tp.setBackground(Color.ORANGE);
+						
+			tp.add(title);
+			cityPanel.add(tp);
+		}
+		
+		// fill out the rest
+		for (int i = 0; i < numSquares - buildingTiles.size(); i++) {
+			JButton eb = new JButton();
+			eb.setBackground(Color.ORANGE);
+			cityPanel.add(eb);
+		}
+		
+		return cityPanel;
+	}
+	
 	
 	// setup the production area
 	private JPanel setupPlayerProductionArea(Player player) {
@@ -72,10 +101,7 @@ public class PlayerBoard extends JPanel {
 			//title.setOpaque(true);
 			title.setFont(new Font("Default", Font.PLAIN, 8));
 			
-			//JPanel tp = new JPanel();
-			//JButton tp = new JButton();
 			JComponent tp;
-			
 			if (productionTileList.get(i).getType() == "") {		// no tile
 				tp = new JPanel();
 				title.setText(productionList.get(i));

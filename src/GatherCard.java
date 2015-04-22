@@ -26,6 +26,28 @@ public class GatherCard extends ActionCard {
 		return resourceType;
 	}
 	
+	//
+	//public boolean executeActionCard(Player player, String selection) {
+	public boolean executeActionCard(Player player) {
+		System.out.println("execute action card - Gather");
+		
+		// nned to pay first
+		
+		if (resourceType.equals("one")) { // or is it '1'
+//			if (selection.equals("type")) {
+//				
+//			}
+//			else if (selection.equals("color")) {
+//				
+//			}
+		}
+		else if (resourceType.equalsIgnoreCase("all")) {
+			
+		}
+		
+		return false;
+	}
+	
 	
 	@Override
 	public String toString() {

@@ -15,6 +15,7 @@ public class ProductionTile {
 	private String type;		// type of tile 
 	private String color;		// color of cube on the tile
 	private int value;			// number of cubes on the tile
+	private boolean hasVillager = false;
 	
 	// constructor default		
 	public ProductionTile() {
@@ -50,8 +51,11 @@ public class ProductionTile {
 		this.color = color;
 	}
 
-	// get value
+	// get value, check first if tile has a villager on it
 	public int getValue() {
+		if (hasVillager) {
+			return value + 1;
+		}
 		return value;
 	}
 
@@ -59,11 +63,22 @@ public class ProductionTile {
 	public void setValue(int value) {
 		this.value = value;
 	}
+	
+	// 
+	public boolean getHasVillager() {
+		return hasVillager;
+	}
+	
+	//
+	public void setHasVillager(boolean yesNo) {
+		hasVillager = yesNo;
+	}
 
 	// override toString method to print tile information
 	@Override
     public String toString() {
-        return getType() + "\n" + getColor() + "\n" + getValue(); 
+        return getType() + "\n" + getColor() + "\n" + getValue()
+        		+ getHasVillager(); 
     } 
 		
 }

@@ -26,6 +26,13 @@ public class TradeCard extends ActionCard {
 		return tradeCost;
 	}
 	
+	//
+	public boolean executeActionCard(Player player) { 
+		System.out.println("execute action card - Trade");
+		return false;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return getName() + " " + tradeCost;

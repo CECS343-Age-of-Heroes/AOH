@@ -13,11 +13,16 @@
 public class Main {
 
 	public static GameController gc = new GameController();
+	public static GameViewController gvc = new GameViewController();
 	
 	public static void main(String[] args) {
 
 		// controller for all the views in the game
-		new GameViewController();
+		//new GameViewController();
 	}
+	
+//	public GameViewController getGameView() {
+//		return gameViewController;
+//	}
 
 }

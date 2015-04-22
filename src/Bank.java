@@ -1,6 +1,3 @@
-import java.awt.*;
-
-import javax.swing.*;
 /*
  * Bank:
  * - holds the number of cubes available for the game
@@ -10,11 +7,9 @@ import javax.swing.*;
  * ADD:
  * 	-
  * FIX:
- * 	- change to just "mostBuildings"
+ * 	- 
  */
-
-@SuppressWarnings("serial")
-public class Bank extends JPanel {
+public class Bank { //extends JPanel {
 	
 	private Cubes cubes = new Cubes();
 	private VictoryCard theWonder = new VictoryCard("The Wonder");
@@ -22,16 +17,12 @@ public class Bank extends JPanel {
 
 	// constructor
 	public Bank() {
-		System.out.println("Creating Bank");
-		setBackground(Color.red);
-		setPreferredSize(new Dimension(750, 100));
 		// set initial values for a new bank with 3 players
 		cubes.setBlue(25);
 		cubes.setGreen(25);
 		cubes.setBrown(25);
 		cubes.setYellow(25);
 		cubes.setRed(30);
-		//System.out.println("Bank Cubes: " + "\n" + cubes);
 	}
 	
 	// returns the banks cubes array list
@@ -39,6 +30,7 @@ public class Bank extends JPanel {
 		return cubes;
 	}
 	
+	// does not check that there is enough cubes to take
 	// removes a number of cubes of a given color
 	public void removeCubes(String color, Integer num) {
 		if (color.equals("blue")) {

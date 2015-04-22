@@ -40,10 +40,16 @@ public class GameViewController extends JFrame {
 		startScreen = new StartScreen();
 		startScreen.startButton.addActionListener(new GameOptionListener());
 		
-//		add(new GamePlayView());
-		add(startScreen);
+		gamePlayView = new GamePlayView();
+		add(gamePlayView);
+//		add(startScreen);
         pack();
         setVisible(true);
+	}
+	
+	//
+	public GamePlayView getGamePlayView() {
+		return gamePlayView;
 	}
 
 	// game button listener to respond when a button is pressed on a different
@@ -75,7 +81,6 @@ public class GameViewController extends JFrame {
 				//		 b.getText().equals("Done")) {
 					System.out.println("Go to tile selection view");
 					getContentPane().remove(rollDiceScreen);
-					// need action listener here ??
 					
 					tileSelectionView = new TileSelectionView();
 					tileSelectionView.nextButton.
@@ -92,7 +97,7 @@ public class GameViewController extends JFrame {
 					victoryCubePlacementView = new VictoryCubePlacementView();
 					victoryCubePlacementView.victoryDoneButton.
 								addActionListener(new GameOptionListener());
-	                // add game action listener here for next view (game play view?)
+					
 					getContentPane().add(victoryCubePlacementView);
 	                invalidate();
 	                validate();

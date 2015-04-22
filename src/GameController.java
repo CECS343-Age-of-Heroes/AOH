@@ -71,6 +71,11 @@ public class GameController {
 		playersList.set(2, temp);
 	}
 	
+	public Player getNextPlayer(Player currentPlayer) {
+		int index = playersList.indexOf(currentPlayer);
+		return (index == 2 ? playersList.get(0) : playersList.get(++index));
+	}
+	
 	
 	// returns the array list of players in the game
 	public ArrayList<Player> getPlayersList() {

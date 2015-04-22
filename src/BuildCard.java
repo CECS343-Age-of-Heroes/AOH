@@ -25,6 +25,27 @@ public class BuildCard extends ActionCard {
 		return numOfBuildings;
 	}
 	
+	//
+	public boolean executeActionCard(Player player, BuildingTile building) { 
+		System.out.println("execute action card - Build");
+		
+		if (player.hasEnoughResources(building.getCubeCost())) {
+			
+			
+			player.removeCubes(building.getCubeCost());
+			
+			
+		}
+		
+//		for (int i = 0; i < numOfBuildings; i++) {
+//			
+//			
+//		}
+		
+		return false;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return getName() + " " + numOfBuildings;

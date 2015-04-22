@@ -232,7 +232,7 @@ public class TileSelectionView extends JPanel {
 			tileButton.setLayout(new BorderLayout());
 			//tileButton.setContentAreaFilled(false); // use if button has image
 			
-			Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
+			Font labelFont = new Font("Default", Font.PLAIN, 14);
 			JLabel nameLabel = new JLabel(tile.getType(), JLabel.CENTER);
 			nameLabel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
 			nameLabel.setForeground(Color.BLUE);
@@ -328,12 +328,9 @@ public class TileSelectionView extends JPanel {
 		tilesPanel.revalidate();
 		tilesPanel.repaint();
 		
-		//System.out.println("Unused Tiles Size: " + unusedTiles.size());
 		// put unselected tiles back into the GameTiles
 		for (ProductionTile tile : unusedTiles) {
-			//GameController.addTile(tile);
 			gc.addProductionTile(tile);
-			//System.out.println("adding back tile");
 		}
 	}
 	

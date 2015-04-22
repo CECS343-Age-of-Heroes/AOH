@@ -1,4 +1,6 @@
 import java.util.*;
+
+import javax.swing.JButton;
 /*
  * GameProductionTiles:
  * - represents the pool of game tiles available to every player as an ArrayList
@@ -28,6 +30,15 @@ public class GameProductionTiles extends ArrayList<ProductionTile> {
 	//public static Tile GetTile() {
 	//	return remove(0);		
 	//}
+	
+	public boolean checkIfValidTileSelection(Player p, ProductionTile tile) {
+		ArrayList<String> list = p.getCulture().getProductionAreaList();
+//		if (list.contains(tile.getType())) {
+//			return true;
+//		}
+//		return false;
+		return list.contains(tile.getType());
+	}
 	
 	// put unused tiles back in the array after player selection, and shuffles
 	public void putUnusedProductionTilesBack(ArrayList<ProductionTile> unusedTiles) {

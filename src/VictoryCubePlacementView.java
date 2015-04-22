@@ -16,6 +16,7 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class VictoryCubePlacementView extends JPanel {
 	// get the games victory cards from the bank 
+//	private Cubes cubes = Main.gc.getBank().getCubes();
 	private VictoryCard theWonder = Main.gc.getBank().getTheWonder();
 	private VictoryCard mostBuildings = Main.gc.getBank().getMostBuildings();
 	public JButton victoryDoneButton = new JButton("Finish");
@@ -54,7 +55,7 @@ public class VictoryCubePlacementView extends JPanel {
 		add(theWonder);
 		add(mostBuildings);
 		add(victoryDoneButton);
-		// simulate computer choices for vicotory cube choices
+		// simulate computer choices for victory cube choices
 		placeComputerCubes();
 	}
 	
@@ -87,6 +88,9 @@ public class VictoryCubePlacementView extends JPanel {
 						mostBuildings.setCubeCount(mostBuildings.getCubeCount() + 1);
 						mostBuildings.updateValueLabel();
 					}
+					// take a red cube from bank and put it on the card
+					//cubes.setRed(cubes.getRed() - 1);
+					Main.gc.getBank().removeCubes("red", 1);
 					clickCount++;		// increment click count
 				}
 			}

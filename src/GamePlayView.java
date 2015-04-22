@@ -1,8 +1,6 @@
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-
 import javax.swing.*;
 /*
  * GamePlayView:
@@ -10,12 +8,14 @@ import javax.swing.*;
  */
 /*
  * ADD:
+ * 	- add the action card played to the action panel and the result of what
+ * 	  the card did or going to do
+ * 	 OR put up what the card will do in the action panel and if its allowed
+ *    with the players current resources and then a button to confirm action
  * 	- an 'S' in the top corner for starting player
  * FIX:
  * 	- 
  */
-
-
 @SuppressWarnings("serial")
 public class GamePlayView extends JPanel {
 
@@ -27,15 +27,18 @@ public class GamePlayView extends JPanel {
 	private Player computer2 = Main.gc.getComputer2();
 	
 	//private JPanel gameBoardsPanel = new GameBoards();
-	private GameBoards gameBoardsPanel = new GameBoards();	
+	private GameBoards gameBoardsPanel; // = new GameBoards();	
 	private JPanel bankPanel = new JPanel();
 	private JPanel cardPanel = new JPanel();
-	private JPanel actionPanel = new JPanel();
+	//private JPanel actionPanel = new JPanel();
+	private ActionView actionView; // = new ActionView();
 	
 	// array list of cultures action cards, changes with each player
 	private ArrayList<ActionCard> permanentCards;
 	private ArrayList<ActionCard> randomCards;
 	private ArrayList<JButton> buttonsList = new ArrayList<>();
+	
+	private Player currentPlayer = pList.get(0);
 	
 	
 	// use to rotate players and player boards on view
@@ -43,8 +46,58 @@ public class GamePlayView extends JPanel {
 	// gameBoardsPanel.updateGameBoard(pList);
 	
 	
+	//-------------------------------------------------------------------------
+	// temp method that sets up most of a game skipping views
+	private void setupFakeGame() {
+		ArrayList<ProductionTile> pt = Main.gc.getGameProductionTiles();
+		
+		human.setName("Matt");
+		human.setCulture("Greek");
+		human.setPlace(1);
+		for (int i = 0; i < 6; i++) {
+			ProductionTile t = pt.remove(0);
+			setupPlayerProduction(human, t);
+		}
+		
+		computer1.setCulture("Norse");
+		computer1.setPlace(2);
+		for (int i = 0; i < 6; i++) {
+			ProductionTile t = pt.remove(0);
+			setupPlayerProduction(computer1, t);
+		}
+		
+		computer2.setCulture("Egyptian");
+		computer2.setPlace(3);
+		for (int i = 0; i < 6; i++) {
+			ProductionTile t = pt.remove(0);
+			setupPlayerProduction(computer2, t);
+		}
+		
+		//currentPlayer = pList.get(0); //human;
+	}
+	
+	// temp method
+	private void setupPlayerProduction(Player player, ProductionTile tile) { 
+		ArrayList<String> list = player.getCulture().getProductionAreaList();
+		ArrayList<ProductionTile> tilesList = player.getProductionTiles();
+		if (list.contains(tile.getType())) {
+			int j = list.indexOf(tile.getType());
+			tilesList.remove(j);
+			tilesList.add(j, tile);
+			list.set(j, "FILLED");
+		}
+	}
+	//-------------------------------------------------------------------------
+	
+	
 	// constructor
 	public GamePlayView() {
+		
+		setupFakeGame();	// temp
+		gameBoardsPanel = new GameBoards();
+		actionView = new ActionView();
+		
+
 		setLayout(null);
 		//setPreferredSize(new Dimension(1200, 822));
 		setBackground(Color.ORANGE);
@@ -54,16 +107,28 @@ public class GamePlayView extends JPanel {
 		setupCardPanel();
 		
 		// set locations and sizes of panels
-		actionPanel.setBounds(0, 0, 300, 800);
+		//actionView
+		//actionPanel.setBounds(0, 0, 300, 800);
 		bankPanel.setBounds(300, 0, 900, 100);
         gameBoardsPanel.setBounds(300, 100, 900, 600);
         cardPanel.setBounds(300, 700, 900, 100);
         
         
-        add(actionPanel);
+        //add(actionPanel);
+        add(actionView);
         add(bankPanel);
         add(gameBoardsPanel);
         add(cardPanel); 
+	}
+	
+	//
+	public GameBoards getGameBoardsPanel() {
+		return gameBoardsPanel;
+	}
+	
+	//
+	public Player getCurrentPlayer() {
+		return currentPlayer;
 	}
 	
 	
@@ -72,12 +137,52 @@ public class GamePlayView extends JPanel {
 		setupCardSelection();
 	}
 	
-	private void setupCardSelection() {
-		actionPanel.removeAll();
+	//
+	private void actionPanelDoneButton(String headerText) {
+		//actionPanel.removeAll();
+		//actionPanel.setLayout(null);
+		actionView.removeAll();
+		actionView.setLayout(null);
 		
-		actionPanel.setLayout(null);
-		actionPanel.setPreferredSize(new Dimension(300, 800));
-		actionPanel.setBackground(Color.BLUE);
+		JPanel actionHeaderPanel = new JPanel();
+		actionHeaderPanel.setLayout(new BorderLayout());
+		actionHeaderPanel.setBounds(0, 200, 300, 200);
+		actionHeaderPanel.setBackground(Color.ORANGE);
+		
+		//JLabel headerLabel = new JLabel(headerText, JLabel.CENTER);
+		JTextArea headerLabel = new JTextArea();
+		headerLabel.setText(headerText);
+		headerLabel.setLineWrap(true);
+		headerLabel.setWrapStyleWord(true);
+		
+		headerLabel.setFont(new Font("Default", Font.BOLD, 25));
+		actionHeaderPanel.add(headerLabel, BorderLayout.CENTER);
+		
+		JButton doneButton = new JButton("Done");
+		doneButton.setBounds(50, 150, 200, 50);
+		doneButton.addActionListener(new OptionListener());
+		actionHeaderPanel.add(doneButton, BorderLayout.SOUTH);
+		
+//		actionPanel.add(actionHeaderPanel);
+//		actionPanel.revalidate();
+//		actionPanel.repaint();
+		actionView.add(actionHeaderPanel);
+		actionView.revalidate();
+		actionView.repaint();
+	}
+	
+	
+	private void setupCardSelection() {
+//		actionPanel.removeAll();
+//		
+//		actionPanel.setLayout(null);
+//		actionPanel.setPreferredSize(new Dimension(300, 800));
+//		actionPanel.setBackground(Color.BLUE);
+		actionView.removeAll();
+		
+		actionView.setLayout(null);
+		actionView.setPreferredSize(new Dimension(300, 800));
+		actionView.setBackground(Color.BLUE);
 		
 		JPanel actionHeaderPanel = new JPanel();
 		actionHeaderPanel.setLayout(new BorderLayout());
@@ -89,65 +194,58 @@ public class GamePlayView extends JPanel {
 		//tileButton.add(nameLabel, BorderLayout.NORTH);
 		
 		JPanel actionBodyPanel = new JPanel();
+		actionBodyPanel.setLayout(new GridLayout(3,2));
+		actionBodyPanel.setBounds(0, 100, 300, 600);
+		actionBodyPanel.setBackground(Color.YELLOW);
 		
-		if (human.getActionCards().size() >= human.getAge()) {
-			System.out.println("**equal size - put done button up");
-			
-			actionBodyPanel.setBounds(0, 100, 300, 600);
-			actionBodyPanel.setBackground(Color.YELLOW);
-			
-			JButton doneButton = new JButton("Done");
-			doneButton.setPreferredSize(new Dimension(200, 50));
-//			doneButton.setBounds(50, 100, 200, 50);
-			actionBodyPanel.add(doneButton);
-		}
-		else {
-			actionBodyPanel.setLayout(new GridLayout(3,2));
-			actionBodyPanel.setBounds(0, 100, 300, 600);
-			actionBodyPanel.setBackground(Color.YELLOW);
-			
-			Dimension cardDim = new Dimension(105, 150);
-			
-			// retrieve the players cultures possible permanent cards
-			for (ActionCard ac : human.getCulture().getPermanentCards()) {
-				JPanel buttonPanel = new JPanel();
-				buttonPanel.setOpaque(false);
-				
-				JButton button = new JButton();
-				button.setText(ac.toString());
-				button.setPreferredSize(cardDim);
-				button.addActionListener(new OptionListener());
-				buttonsList.add(button);
-				
-				if (human.getActionCards().contains(ac)) {
-					button.setEnabled(false);
-				}
-				buttonPanel.add(button);
-				actionBodyPanel.add(buttonPanel);
-			}
-			
-			// players cultures random cards 
+		Dimension cardDim = new Dimension(105, 150);
+		
+		// retrieve the players cultures possible permanent cards
+		for (ActionCard ac : human.getCulture().getPermanentCards()) {
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setOpaque(false);
 			
-			JButton randButton = new JButton();
-			randButton.setText("random deck");
-			randButton.setPreferredSize(cardDim);
-			randButton.addActionListener(new OptionListener());
-			buttonsList.add(randButton);
-			buttonPanel.add(randButton);
+			JButton button = new JButton();
+			button.setText(ac.toString());
+			button.setPreferredSize(cardDim);
+			button.addActionListener(new OptionListener());
+			buttonsList.add(button);
+			
+			if (human.getActionCards().contains(ac)) {
+				button.setEnabled(false);
+			}
+			buttonPanel.add(button);
 			actionBodyPanel.add(buttonPanel);
 		}
 		
-		actionPanel.add(actionHeaderPanel);
-		actionPanel.add(actionBodyPanel);
+		// players cultures random cards 
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setOpaque(false);
 		
-		actionPanel.revalidate();
-		actionPanel.repaint();
+		JButton randButton = new JButton();
+		randButton.setText("random deck");
+		randButton.setPreferredSize(cardDim);
+		randButton.addActionListener(new OptionListener());
+		buttonsList.add(randButton);
+		buttonPanel.add(randButton);
+		actionBodyPanel.add(buttonPanel);
+		
+//		actionPanel.add(actionHeaderPanel);
+//		actionPanel.add(actionBodyPanel);
+//		
+//		actionPanel.revalidate();
+//		actionPanel.repaint();
+		actionView.add(actionHeaderPanel);
+		actionView.add(actionBodyPanel);
+		
+		actionView.revalidate();
+		actionView.repaint();
 	}
 	
 	// setup the bank panel
-	private void setupBankPanel() {
+	public void setupBankPanel() {
+		bankPanel.removeAll();
+		
 		JLabel bankLabel = new JLabel("Bank:  ");
 		bankLabel.setFont(new Font("Default", Font.BOLD, 25));
 		bankPanel.add(bankLabel);
@@ -184,6 +282,9 @@ public class GamePlayView extends JPanel {
 		buildTiles.setFont(new Font("Default", Font.PLAIN, 10));
 		buildTiles.setEnabled(false);
 		bankPanel.add(buildTiles);
+		
+		bankPanel.revalidate();
+		bankPanel.repaint();
 	}
 	
 	// set up the card panel
@@ -208,7 +309,10 @@ public class GamePlayView extends JPanel {
 			((JButton)ac).setMaximumSize(new Dimension(68, 95));
 			ac.setText(ac.toString());
 			ac.setFont(new Font("Default", Font.PLAIN, 10));
-			cardPanel.add((JButton)ac);
+			if (ac.getActionListeners().length == 0) {
+				ac.addActionListener(actionView.getActionCardListener());
+			}
+			cardPanel.add(ac);
 			cardPanel.add(Box.createRigidArea(new Dimension(20, 0))); // works			
 		}
 		cardPanel.revalidate();
@@ -227,12 +331,18 @@ public class GamePlayView extends JPanel {
 		System.out.println(p.getName() + " HAS " + numPerm + "p,  " + numRand + "r");
 		// permanent
 		for (int i = 0; i < numPerm; i++) {
-			ac.add(permanentCards.remove(new Random().nextInt(permanentCards.size())));
+			//ac.add(permanentCards.remove(new Random().nextInt(permanentCards.size())));
+			ac.add(permanentCards.get(new Random().nextInt(permanentCards.size())));
 		}
 		// random
 		for (int i = 0; i < numRand; i++) {
 			ac.add(randomCards.remove(new Random().nextInt(randomCards.size())));
 		}
+	}
+		
+	//
+	public OptionListener getOptionListener() {
+		return new OptionListener();
 	}
 	
 	
@@ -244,48 +354,39 @@ public class GamePlayView extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 		
 			if (e.getSource() instanceof JButton) {
+				JButton button = (JButton)e.getSource();
 				
 				if (human.getActionCards().size() < human.getAge()) {
 					// remove card from permanent or random cultures array list
-					// of cards and add card to players action card array list
-					
+					// of cards and add card to players action card array list		
 					permanentCards = human.getCulture().getPermanentCards();
 					randomCards = human.getCulture().getRandomCards();
 					
-					if (((JButton)e.getSource()).getText().equals("random deck")) {
-						int index = new Random().nextInt(randomCards.size());
-						//tPlayer.getActionCards().add(randomCards.get(index));						
+					if (button.getText().equals("random deck")) {
+						int index = new Random().nextInt(randomCards.size());						
 						human.getActionCards().add(randomCards.remove(index));
 					}
 					else {
-						int index = buttonsList.indexOf(e.getSource());
-						// not the best or when discarding just remove from 
-						// players action array
+						int index = buttonsList.indexOf(button);
 						human.getActionCards().add(permanentCards.get(index));
-						//tPlayer.getActionCards().add(permanentCards.remove(index));
-						((JButton)e.getSource()).setEnabled(false);
+						button.setEnabled(false);
 					}
-					
 					setupCardPanel();
-					
-//					System.out.println("Player ActCard Size: " + human.getActionCards().size());
-//					System.out.println("PermCard Size: " + human.getCulture().getPermanentCards().size());
-//					System.out.println("RandCard Size: " + human.getCulture().getRandomCards().size());
+					if (human.getActionCards().size() == human.getAge()) {
+						actionPanelDoneButton("Action Card \nSelection Completed");
+					}
 				}
-				
-				if (human.getActionCards().size() >= human.getAge()) {
-					setupCardSelection();
-					// update action panel here with message and button
-					// function call
-					// auto select the action cards for the computer after
-					// human is done
+				else if (button.getText().equals("Done")) {
+					System.out.println("select for computers + done clicked");
 					selectComputerCards(computer1);
 					selectComputerCards(computer2);
-					
+					actionView.removeAll();
+					actionView.revalidate();
+					actionView.repaint();
 					testing();
 				}
+				
 			}
-			
 		}	
 	}
 	

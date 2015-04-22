@@ -141,6 +141,28 @@ public class Player {
 	public void setProductionTiles(ArrayList<ProductionTile> tiles) {
 		this.productionTiles = tiles;
 	}
+	
+	// return a cubes array with the total board value of a type
+	public Cubes getProductionValueOfType(String type) {
+		Cubes cubes = new Cubes();
+		for (ProductionTile tile : productionTiles) {
+			if (tile.getType().equals(type)) {
+				cubes.addToColor(tile.getColor(), tile.getValue());
+			}
+		}
+		return cubes;
+	}
+	
+	// return a cubes array with the total board value of a color
+	public Cubes getProductionValueOfColor(String color) {
+		Cubes cubes = new Cubes();
+		for (ProductionTile tile : productionTiles) {
+			if (tile.getColor().equals(color)) {
+				cubes.addToColor(tile.getColor(), tile.getValue());
+			}
+		}
+		return cubes;
+	}
 
 	// return cubes
 	public Cubes getCubes() {
@@ -150,6 +172,22 @@ public class Player {
 	// set cubes		// needed ??
 	public void setCubes(Cubes cubes) {
 		this.cubes = cubes;
+	}
+	
+	// removes an array of cubes from the players cubes
+	public void removeCubes(Cubes remove) {
+		cubes.setCubes(cubes.getBlue() - remove.getBlue(), 
+					   cubes.getGreen() - remove.getGreen(), 
+					   cubes.getBrown() - remove.getBrown(), 
+					   cubes.getYellow() - remove.getYellow());
+	}
+	
+	//
+	public boolean hasEnoughResources(Cubes cubesCost) {
+		return (cubes.getBlue() >= cubesCost.getBlue() &&
+				cubes.getGreen() >= cubesCost.getGreen() &&
+				cubes.getBrown() >= cubesCost.getBrown() &&
+				cubes.getYellow() >= cubesCost.getYellow());
 	}
 
 

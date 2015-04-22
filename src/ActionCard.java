@@ -28,6 +28,8 @@ public class ActionCard extends Card {
 //		type = aType;
 //	}
 	
+	public boolean executeActionCard(Player player) { return false; }
+	
 	public String toString() {
 		return "i";
 	}

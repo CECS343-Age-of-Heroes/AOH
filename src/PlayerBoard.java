@@ -21,9 +21,11 @@ public class PlayerBoard extends JPanel {
 		setBackground(Color.RED);
 		
 		JPanel holdingArea = new JPanel();
+		holdingArea.setLayout(new GridLayout(8,1));
 		holdingArea.setBackground(Color.gray);
+		holdingArea.add(new JLabel(" #" + player.getPlace() +"  "+ player.getName()  
+					+"  "+ player.ageToString()));
 		holdingArea.add(new JLabel(player.getCubes().toString()));
-		holdingArea.add(new JLabel(player.getName() + " #" + player.getPlace()));
 		
 		JPanel bottomArea = new JPanel();
 		bottomArea.setLayout(new GridLayout(1,2));
@@ -45,9 +47,6 @@ public class PlayerBoard extends JPanel {
 	private JPanel setupPlayerCityArea(Player player) {
 		ArrayList<BuildingTile> buildingTiles = player.getBuildingTiles();
 		
-		//BuildingTile temp = new BuildingTile("House", new Cubes());
-		//buildingTiles.add(temp);
-		
 		JPanel cityPanel = new JPanel();
 		cityPanel.setLayout(new GridLayout(4,4));
 		cityPanel.setBounds(134, 0, 267, 267);
@@ -65,7 +64,6 @@ public class PlayerBoard extends JPanel {
 			JButton tp = new JButton();
 			title.setText(buildingTiles.get(i).getName());
 			tp.setText(buildingTiles.get(i).getName());
-			//tp.setBackground(Color.ORANGE);
 						
 			tp.add(title);
 			cityPanel.add(tp);

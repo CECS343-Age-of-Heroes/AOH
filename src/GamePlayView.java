@@ -30,7 +30,6 @@ public class GamePlayView extends JPanel {
 	private GameBoards gameBoardsPanel; // = new GameBoards();	
 	private JPanel bankPanel = new JPanel();
 	private JPanel cardPanel = new JPanel();
-	//private JPanel actionPanel = new JPanel();
 	private ActionView actionView; // = new ActionView();
 	
 	// array list of cultures action cards, changes with each player
@@ -72,8 +71,6 @@ public class GamePlayView extends JPanel {
 			ProductionTile t = pt.remove(0);
 			setupPlayerProduction(computer2, t);
 		}
-		
-		//currentPlayer = pList.get(0); //human;
 	}
 	
 	// temp method
@@ -94,8 +91,8 @@ public class GamePlayView extends JPanel {
 	public GamePlayView() {
 		
 		setupFakeGame();	// temp
-		gameBoardsPanel = new GameBoards();
-		actionView = new ActionView();
+		gameBoardsPanel = new GameBoards();// temp
+		actionView = new ActionView();// temp
 		
 
 		setLayout(null);
@@ -108,13 +105,11 @@ public class GamePlayView extends JPanel {
 		
 		// set locations and sizes of panels
 		//actionView
-		//actionPanel.setBounds(0, 0, 300, 800);
+		actionView.setBounds(0, 0, 300, 800);
 		bankPanel.setBounds(300, 0, 900, 100);
         gameBoardsPanel.setBounds(300, 100, 900, 600);
         cardPanel.setBounds(300, 700, 900, 100);
         
-        
-        //add(actionPanel);
         add(actionView);
         add(bankPanel);
         add(gameBoardsPanel);
@@ -131,53 +126,13 @@ public class GamePlayView extends JPanel {
 		return currentPlayer;
 	}
 	
-	
 	// setup the action panel
 	private void setupActionPanel() {
 		setupCardSelection();
 	}
-	
+		
 	//
-	private void actionPanelDoneButton(String headerText) {
-		//actionPanel.removeAll();
-		//actionPanel.setLayout(null);
-		actionView.removeAll();
-		actionView.setLayout(null);
-		
-		JPanel actionHeaderPanel = new JPanel();
-		actionHeaderPanel.setLayout(new BorderLayout());
-		actionHeaderPanel.setBounds(0, 200, 300, 200);
-		actionHeaderPanel.setBackground(Color.ORANGE);
-		
-		//JLabel headerLabel = new JLabel(headerText, JLabel.CENTER);
-		JTextArea headerLabel = new JTextArea();
-		headerLabel.setText(headerText);
-		headerLabel.setLineWrap(true);
-		headerLabel.setWrapStyleWord(true);
-		
-		headerLabel.setFont(new Font("Default", Font.BOLD, 25));
-		actionHeaderPanel.add(headerLabel, BorderLayout.CENTER);
-		
-		JButton doneButton = new JButton("Done");
-		doneButton.setBounds(50, 150, 200, 50);
-		doneButton.addActionListener(new OptionListener());
-		actionHeaderPanel.add(doneButton, BorderLayout.SOUTH);
-		
-//		actionPanel.add(actionHeaderPanel);
-//		actionPanel.revalidate();
-//		actionPanel.repaint();
-		actionView.add(actionHeaderPanel);
-		actionView.revalidate();
-		actionView.repaint();
-	}
-	
-	
 	private void setupCardSelection() {
-//		actionPanel.removeAll();
-//		
-//		actionPanel.setLayout(null);
-//		actionPanel.setPreferredSize(new Dimension(300, 800));
-//		actionPanel.setBackground(Color.BLUE);
 		actionView.removeAll();
 		
 		actionView.setLayout(null);
@@ -230,14 +185,8 @@ public class GamePlayView extends JPanel {
 		buttonPanel.add(randButton);
 		actionBodyPanel.add(buttonPanel);
 		
-//		actionPanel.add(actionHeaderPanel);
-//		actionPanel.add(actionBodyPanel);
-//		
-//		actionPanel.revalidate();
-//		actionPanel.repaint();
 		actionView.add(actionHeaderPanel);
 		actionView.add(actionBodyPanel);
-		
 		actionView.revalidate();
 		actionView.repaint();
 	}
@@ -373,19 +322,15 @@ public class GamePlayView extends JPanel {
 					}
 					setupCardPanel();
 					if (human.getActionCards().size() == human.getAge()) {
-						actionPanelDoneButton("Action Card \nSelection Completed");
+						System.out.println("select for computers + done clicked");
+						selectComputerCards(computer1);
+						selectComputerCards(computer2);
+						actionView.removeAll();
+						actionView.revalidate();
+						actionView.repaint();
+						testing();
 					}
 				}
-				else if (button.getText().equals("Done")) {
-					System.out.println("select for computers + done clicked");
-					selectComputerCards(computer1);
-					selectComputerCards(computer2);
-					actionView.removeAll();
-					actionView.revalidate();
-					actionView.repaint();
-					testing();
-				}
-				
 			}
 		}	
 	}

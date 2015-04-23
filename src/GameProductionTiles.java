@@ -31,18 +31,14 @@ public class GameProductionTiles extends ArrayList<ProductionTile> {
 	//	return remove(0);		
 	//}
 	
+	//
 	public boolean checkIfValidTileSelection(Player p, ProductionTile tile) {
 		ArrayList<String> list = p.getCulture().getProductionAreaList();
-//		if (list.contains(tile.getType())) {
-//			return true;
-//		}
-//		return false;
 		return list.contains(tile.getType());
 	}
 	
 	// put unused tiles back in the array after player selection, and shuffles
 	public void putUnusedProductionTilesBack(ArrayList<ProductionTile> unusedTiles) {
-		
 		for (int i = 0; i < unusedTiles.size(); i++) {
 			add(unusedTiles.remove(i));
 		}
@@ -66,7 +62,6 @@ public class GameProductionTiles extends ArrayList<ProductionTile> {
 				add(new ProductionTile("fertile", "yellow", 1));
 			}
 		}
-		
 		// forest x 15
 		for (int i = 1; i <= 15; i++) {
 			if (i <= 9) {
@@ -82,7 +77,6 @@ public class GameProductionTiles extends ArrayList<ProductionTile> {
 				add(new ProductionTile("forest", "blue", 1));
 			}
 		}
-		
 		// hill x16
 		for (int i = 1; i <= 16; i++) {
 			if (i <= 4) {
@@ -98,7 +92,6 @@ public class GameProductionTiles extends ArrayList<ProductionTile> {
 				add(new ProductionTile("hill", "blue", 1));
 			}
 		}
-		
 		// mountain x12
 		for (int i = 1; i <= 12; i++) {
 			if (i <= 6) {
@@ -111,7 +104,6 @@ public class GameProductionTiles extends ArrayList<ProductionTile> {
 				add(new ProductionTile("mountain", "blue", 1));
 			}
 		}
-		
 		// desert x14
 		for (int i = 1; i <= 14; i++) {
 			if (i <= 7) {
@@ -121,7 +113,6 @@ public class GameProductionTiles extends ArrayList<ProductionTile> {
 				add(new ProductionTile("desert", "yellow", 1));
 			}
 		}
-		
 		// swamp x12
 		for (int i = 1; i <= 12; i++) {
 			if (i <= 4) {

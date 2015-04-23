@@ -10,15 +10,16 @@ import javax.swing.*;
  */
 /*
  * Add:
- * 	- cost to buildings
- * 	- need to allow up to 10 houses 
+ * 	- need to allow up to 10 houses
+ *  - 8 favors for 1 victory on trade card
+ *  -
  * Fix:
  * 	- 
  */
 @SuppressWarnings("serial")
 public class ActionView extends JPanel {
 
-	private Player player = Main.gc.getHuman();
+	private Player currentPlayer = Main.gc.getHuman();
 	public ActionCardListener acl = new ActionCardListener();
 	private String currentView = "";
 	
@@ -41,7 +42,7 @@ public class ActionView extends JPanel {
 	private ArrayList<JButton> tileButtonsToPick = new ArrayList<>();
 	
 	public ActionView() {
-		setBounds(0, 0, 300, 800);
+		//setBounds(0, 0, 300, 800);
 		
 	}
 	
@@ -49,11 +50,20 @@ public class ActionView extends JPanel {
 		return acl;
 	}
 	
+	public void displayCurrentPlayer() {
+		removeAll();
+		setLayout(new FlowLayout());
+		
+		
+		
+		
+		revalidate();
+		repaint();
+	}
+	
 	// put radioButtons in the action panel with buildings that the player
 	// can build
-	//private void selectBuildingPanel(Player aPlayer) {
-	private void selectBuildingPanel() {
-		//player = aPlayer;
+	private void buildingPanel() {
 		currentView = "build";
 		removeAll();
 		setLayout(null);
@@ -67,41 +77,50 @@ public class ActionView extends JPanel {
 		mainPanel.add(cardLabel);
 	
 		JPanel buildingPanel = new JPanel();
-		
 		buildingPanel.setPreferredSize(new Dimension(300, 500));
 		ArrayList<BuildingTile> buildings = Main.gc.getGameBuildingTiles().getBuildingsList();
 		buildingPanel.setLayout(new GridLayout(buildings.size(), 2));
 		ButtonGroup buttonGroup = new ButtonGroup();	// holds 3 radio buttons	
-		System.out.println("Cube cost buildings");
 		
 		for (BuildingTile building: buildings) {
 			// if player does not have this building then add it as an option
-			JRadioButton rb = new JRadioButton(building.getName());
-			//if (!player.getBuildingTiles().contains(building)) {
-			boolean hasOne = false; 
-			for (BuildingTile tile : player.getBuildingTiles()) {
+			
+			boolean hasOne = false;
+			int numHouses = 0;
+			for (BuildingTile tile : currentPlayer.getBuildingTiles()) {
 				if (tile.getName().equals(building.getName())) {
 					hasOne = true;
+					if (tile.getName().equals("House")) {
+						numHouses++;
+					}
 				}
 			}
 			boolean canPay = false;
-			if (player.hasEnoughResources(building.getCubeCost())) {
+			if (currentPlayer.hasEnoughResources(building.getCubeCost())) {
 				canPay = true;
 			}
-			if (!hasOne && canPay) {
-				rb.addActionListener(new ActionCardListener());
-				buttonGroup.add(rb);
-				buildingPanel.add(rb);
-				JLabel costLabel = new JLabel(building.getCubeCost().costToString());
-				buildingPanel.add(costLabel);
+			
+			JRadioButton rb = new JRadioButton(building.getName());
+			rb.addActionListener(new ActionCardListener());
+			buttonGroup.add(rb);
+			JLabel costLabel = new JLabel(building.getCubeCost().costToString());
+			
+			if (canPay) {
+				if (building.getName().equals("House") && 
+						numHouses <= 10 || !hasOne) {
+					buildingPanel.add(rb);
+					buildingPanel.add(costLabel);
+				}
 			}
-			else if (!hasOne && !canPay) {
-				JLabel b = new JLabel(building.getName() + " (More$)");
-				b.setForeground(Color.RED);
-				buildingPanel.add(b);
-				JLabel costLabel = new JLabel(building.getCubeCost().costToString());
-				costLabel.setForeground(Color.RED);
-				buildingPanel.add(costLabel);
+			else if (!canPay) {
+				if (building.getName().equals("House") && 
+						numHouses <= 10 || !hasOne) {
+					JLabel b = new JLabel(building.getName() + " (More$)");
+					b.setForeground(Color.RED);
+					buildingPanel.add(b);
+					costLabel.setForeground(Color.RED);
+					buildingPanel.add(costLabel);
+				}
 			}
 		}
 		mainPanel.add(buildingPanel);
@@ -111,7 +130,6 @@ public class ActionView extends JPanel {
 		mainPanel.add(buildButton);
 		
 		doneButton.addActionListener(new ActionCardListener());
-		//doneButton.setEnabled(false);
 		doneButton.setVisible(false);
 		mainPanel.add(doneButton);
 		
@@ -125,34 +143,58 @@ public class ActionView extends JPanel {
 		currentView = "next age";
 		removeAll();
 		setLayout(null);
+//		setLayout(new FlowLayout());
+		
+		//add(cardLabel);	// name of card
+		cardLabel.setBounds(0, 0, 300, 100);
+		cardLabel.setFont(new Font("Default", Font.PLAIN, 18));
+		cardLabel.setForeground(Color.WHITE);
+		add(cardLabel);
+		
+		playerLabel.setText(currentPlayer.getName());
+		playerLabel.setFont(new Font("Default", Font.PLAIN, 15));
+		playerLabel.setForeground(Color.WHITE);
+		playerLabel.setBounds(0, 100, 300, 100);
+		add(playerLabel);
 		
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new GridLayout(4,1));
-		mainPanel.setBounds(0, 0, 300, 400);
+//		mainPanel.setLayout(new GridLayout(4,1));
+		mainPanel.setBounds(0, 200, 300, 200);
+//		mainPanel.setPreferredSize(new Dimension(300, 150));
 		mainPanel.setBackground(Color.GREEN);
+//		mainPanel.add(cardLabel);
 		
-		//JLabel header = new JLabel("Next Age:");
-		mainPanel.add(cardLabel);
-		
-		JLabel costLabel = new JLabel();
+		int theCost = 0;
+		JTextArea costLabel = new JTextArea();
 		if (cardValue == 345) {
-			costLabel.setText("Cost = " + String.valueOf(player.getAge() - 1));
+			theCost = currentPlayer.getAge() - 1;
 		}
 		else if (cardValue == 456) {
-			costLabel.setText("Cost = " + String.valueOf(player.getAge()));
+			theCost = currentPlayer.getAge();
 		}
+		
+		Cubes cubeCost = new Cubes(theCost, theCost, theCost, theCost, 0);
+		costLabel.setText("Cost: \n" + cubeCost.toString());
 		mainPanel.add(costLabel);
+		
+		if (currentPlayer.hasEnoughResources(cubeCost)) {
+			doneButton.setText("Confirm");
+			doneButton.addActionListener(new ActionCardListener());
+		}
+		else {
+			doneButton.setText("Not Enough Resources");
+		}
+//		mainPanel.add(doneButton);
+		doneButton.setBounds(50, 500, 200, 50);
 		
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionCardListener());
-		mainPanel.add(cancelButton);
-		
-		doneButton.setText("Confirm");
-		doneButton.addActionListener(new ActionCardListener());
-		//doneButton.setEnabled(false);
-		mainPanel.add(doneButton);
+		cancelButton.setBounds(50, 600, 200, 50);
+//		mainPanel.add(cancelButton);
 		
 		add(mainPanel);
+		add(doneButton);
+		add(cancelButton);
 		revalidate();
 		repaint();
 	}
@@ -278,7 +320,7 @@ public class ActionView extends JPanel {
 		cardLabel.setFont(new Font("Default", Font.PLAIN, 18));
 		add(cardLabel);
 		
-		playerLabel.setText(player.getName());
+		playerLabel.setText(currentPlayer.getName());
 		playerLabel.setFont(new Font("Default", Font.PLAIN, 15));
 		playerLabel.setBounds(0, 100, 300, 100);
 		add(playerLabel);
@@ -340,7 +382,7 @@ public class ActionView extends JPanel {
 				if (ac instanceof BuildCard) {
 					System.out.println("Add Build Action/Buttons");
 					count = 0;
-					selectBuildingPanel();
+					buildingPanel();
 					numToBuild = ((BuildCard) ac).getNumOfBuildings();
 					System.out.println("Num to build = " + numToBuild);
 				}
@@ -383,11 +425,11 @@ public class ActionView extends JPanel {
 					if (button.getText() == "Pass") {
 						count++;
 						// rotate to next player
-						player = Main.gc.getNextPlayer(player);
+						currentPlayer = Main.gc.getNextPlayer(currentPlayer);
 					}
 					else {
-						ArrayList<String> list = player.getCulture().getProductionAreaList();
-						ArrayList<ProductionTile> tilesList = player.getProductionTiles();
+						ArrayList<String> list = currentPlayer.getCulture().getProductionAreaList();
+						ArrayList<ProductionTile> tilesList = currentPlayer.getProductionTiles();
 						
 						int buttonIndex = tileButtonsToPick.indexOf(button);
 						ProductionTile clicked = tilesToPick.get(buttonIndex);
@@ -396,7 +438,7 @@ public class ActionView extends JPanel {
 						
 						GameProductionTiles gpt = new GameProductionTiles();
 						
-						if (gpt.checkIfValidTileSelection(player, clicked)) {
+						if (gpt.checkIfValidTileSelection(currentPlayer, clicked)) {
 							
 							int j = list.indexOf(clicked.getType());
 							tilesList.remove(j);
@@ -407,10 +449,10 @@ public class ActionView extends JPanel {
 							count++;
 							gpv.getGameBoardsPanel().updateGameBoard(Main.gc.getPlayersList());
 							// rotate to next player
-							player = Main.gc.getNextPlayer(player);
+							currentPlayer = Main.gc.getNextPlayer(currentPlayer);
 						}
 					}
-					playerLabel.setText(player.getName());
+					playerLabel.setText(currentPlayer.getName());
 					
 					// 
 					if (count >= 3) {
@@ -419,21 +461,21 @@ public class ActionView extends JPanel {
 						repaint();
 					}
 				}
-
+				// add selected building to city area, move resources
 				if (button.getText().equals("Build It")) {
 					count++;
 					BuildingTile building = gbt.removeBuildingWithName(radioButtonText);
-					player.getBuildingTiles().add(building);
-					player.getCubes().removeCubesFromCubes(building.getCubeCost());
+					currentPlayer.getBuildingTiles().add(building);
+					currentPlayer.getCubes().removeCubesFromCubes(building.getCubeCost());
+					Main.gc.getBank().getCubes().addCubesToCubes(building.getCubeCost());
 					gpv.getGameBoardsPanel().updateGameBoard(Main.gc.getPlayersList());
+					gpv.setupBankPanel();
 					
-					selectBuildingPanel();
-					//doneButton.setEnabled(true);
+					buildingPanel();
 					doneButton.setVisible(true);
 					
 					if (count >= numToBuild) {
 						removeAll();
-//						add(new JLabel("done building " + numToBuild));
 						revalidate();
 						repaint();
 					}		
@@ -441,19 +483,21 @@ public class ActionView extends JPanel {
 				// confirm next age upgrade
 				else if (button.getText().equals("Confirm")) {
 					
-					Cubes pCubes = player.getCubes();
-					Cubes cubeCost = new Cubes();
+					Cubes pCubes = currentPlayer.getCubes();
+					
 					int theCost = 0;
 					if (cardValue == 345) {
-						theCost -= player.getAge() - 1;
+						theCost = currentPlayer.getAge() - 1;
 					}
 					else if (cardValue == 456) {
-						theCost -= player.getAge();
+						theCost = currentPlayer.getAge();
 					}
 					//cardValue = theCost;
-					cubeCost.setCubes(theCost, theCost, theCost, theCost);
+					//cubeCost.setCubes(theCost, theCost, theCost, theCost);
+					Cubes cubeCost = new Cubes(theCost, theCost, theCost, theCost, 0);
+					doneButton.setText("Not Enough Resources");
 					//
-					if (player.hasEnoughResources(cubeCost)) {
+					if (currentPlayer.hasEnoughResources(cubeCost)) {
 						
 						pCubes.addCubesToCubes(cubeCost);
 						
@@ -468,6 +512,7 @@ public class ActionView extends JPanel {
 						revalidate();
 						repaint();
 					}
+					
 				}
 				//
 				else if (button.getText().equals("Trade")) {
@@ -479,7 +524,7 @@ public class ActionView extends JPanel {
 					int yellow = 0;
 					
 					// cost to trade
-					player.getCubes().addToColor(radioButtonText, -1);
+					currentPlayer.getCubes().addToColor(radioButtonText, -1);
 					
 					for (JTextField tf : sendTFs) {
 						toSendCount += Integer.valueOf(tf.getText()); 
@@ -510,8 +555,8 @@ public class ActionView extends JPanel {
 					 
 					 
 					if (toSendCount == toRecieveCount) {
-						player.getCubes().addCubesToCubes(removePlayerCubes);
-						player.getCubes().addCubesToCubes(addPlayerCubes);
+						currentPlayer.getCubes().addCubesToCubes(removePlayerCubes);
+						currentPlayer.getCubes().addCubesToCubes(addPlayerCubes);
 						Main.gc.getBank().getCubes().addCubesToCubes(addBankCubes);
 						Main.gc.getBank().getCubes().addCubesToCubes(removeBankCubes);
 						

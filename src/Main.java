@@ -18,7 +18,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		// controller for all the views in the game
-		//new GameViewController();
+//		new GameViewController();
 	}
 	
 //	public GameViewController getGameView() {

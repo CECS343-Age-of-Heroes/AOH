@@ -25,12 +25,6 @@ public class ExploreCard extends ActionCard {
 	}
 	
 	//
-	public boolean executeActionCard(Player player) { 
-		System.out.println("execute action card - Explore");
-		return false;
-	}
-	
-	
 	@Override
 	public String toString() {
 		return getName() + " " + numOfTiles;

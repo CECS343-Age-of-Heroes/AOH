@@ -13,7 +13,6 @@ public class TradeCard extends ActionCard {
 	
 	private int tradeCost = 0;
 	
-	
 	// constructor
 	public TradeCard(int cost) {
 		setName("Trade");
@@ -27,12 +26,6 @@ public class TradeCard extends ActionCard {
 	}
 	
 	//
-	public boolean executeActionCard(Player player) { 
-		System.out.println("execute action card - Trade");
-		return false;
-	}
-	
-	
 	@Override
 	public String toString() {
 		return getName() + " " + tradeCost;

@@ -24,7 +24,8 @@ public class GameViewController extends JFrame {
 	private RollDiceScreen rollDiceScreen;
 	private TileSelectionView tileSelectionView;
 	private VictoryCubePlacementView victoryCubePlacementView;
-	private GamePlayView gamePlayView;
+	//private GamePlayView gamePlayView;
+	private GamePlayView gamePlayView;// = new GamePlayView();
 	
 	// constructor
 	public GameViewController() {
@@ -107,7 +108,7 @@ public class GameViewController extends JFrame {
 				//else if (b.equals(victoryCubePlacementView.victoryDoneButton)) {
 					System.out.println("Go to game play view");
 					getContentPane().remove(victoryCubePlacementView);
-					gamePlayView = new GamePlayView();
+					//gamePlayView = new GamePlayView();
 					
 					getContentPane().add(gamePlayView);
 	                invalidate();

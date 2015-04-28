@@ -56,6 +56,7 @@ public class GameBuildingTiles extends ArrayList<BuildingTile> {
 			if (tile.getName().equals(name)) {
 				System.out.println("assigning building");
 				bt = tile;
+				break;
 				//this.remove(tile);
 			}
 		}

@@ -46,6 +46,21 @@ public class Player {
 		this.actionCards = ac;
 	}
 	
+	//
+	public ActionCard getValidActionCard() {
+		ActionCard validCard = null;
+		for (ActionCard ac : actionCards) {
+			if (ac.canPlay(this)) {
+				validCard = ac;
+			}
+			else {
+				validCard = actionCards.get(0);	// if none valid return first
+			}
+		}
+		
+		return validCard;
+	}
+	
 	
 	// get name
 	public String getName() {
@@ -160,6 +175,15 @@ public class Player {
 			if (tile.getColor().equals(color)) {
 				cubes.addToColor(tile.getColor(), tile.getValue());
 			}
+		}
+		return cubes;
+	}
+	
+	//
+	public Cubes getProductionValueAll() {
+		Cubes cubes = new Cubes();
+		for (ProductionTile tile : productionTiles) {
+			cubes.addToColor(tile.getColor(), tile.getValue());
 		}
 		return cubes;
 	}

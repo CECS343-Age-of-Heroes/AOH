@@ -52,10 +52,12 @@ public class GamePlayView extends JPanel {
 		
 		human.setName("Matt");
 		human.setCulture("Greek");
+		human.setAge(5);
 		human.setPlace(1);
 		for (int i = 0; i < 6; i++) {
-			ProductionTile t = pt.remove(0);
-			setupPlayerProduction(human, t);
+			//ProductionTile t = pt.remove(0);
+			//setupPlayerProduction(human, t);
+			setupPlayerProduction(human, pt.remove(0));
 		}
 		
 		computer1.setCulture("Norse");
@@ -117,6 +119,11 @@ public class GamePlayView extends JPanel {
 	}
 	
 	//
+	public ActionView getActionView() {
+		return actionView;
+	}
+	
+	//
 	public GameBoards getGameBoardsPanel() {
 		return gameBoardsPanel;
 	}
@@ -124,6 +131,11 @@ public class GamePlayView extends JPanel {
 	//
 	public Player getCurrentPlayer() {
 		return currentPlayer;
+	}
+	
+	//
+	public void setCurrentPlayer(Player player) {
+		currentPlayer = player;
 	}
 	
 	// setup the action panel
@@ -237,7 +249,7 @@ public class GamePlayView extends JPanel {
 	}
 	
 	// set up the card panel
-	private void setupCardPanel() {
+	public void setupCardPanel() {
 		cardPanel.removeAll();
 		
 		cardPanel.setPreferredSize(new Dimension(900, 100));
@@ -247,14 +259,17 @@ public class GamePlayView extends JPanel {
 		JPanel playersCardPanel = new JPanel();
 		playersCardPanel.setLayout(new GridLayout(3,1));
 		playersCardPanel.setBackground(Color.ORANGE);
-		JLabel pLabel = new JLabel(human.getName(), JLabel.CENTER);
+		
+//		JLabel pLabel = new JLabel(human.getName(), JLabel.CENTER);
+		JLabel pLabel = new JLabel(currentPlayer.getName(), JLabel.CENTER);
 		JLabel cLabel = new JLabel("Action Cards", JLabel.CENTER);
 		playersCardPanel.add(pLabel);
 		playersCardPanel.add(cLabel);
 		playersCardPanel.setMaximumSize(new Dimension(100, 100));
 		cardPanel.add(playersCardPanel);
 		
-		for (ActionCard ac : human.getActionCards()) {
+		//for (ActionCard ac : human.getActionCards()) {
+		for (ActionCard ac : currentPlayer.getActionCards()) {
 			((JButton)ac).setMaximumSize(new Dimension(68, 95));
 			ac.setText(ac.toString());
 			ac.setFont(new Font("Default", Font.PLAIN, 10));
@@ -264,12 +279,13 @@ public class GamePlayView extends JPanel {
 			cardPanel.add(ac);
 			cardPanel.add(Box.createRigidArea(new Dimension(20, 0))); // works			
 		}
+		
 		cardPanel.revalidate();
 		cardPanel.repaint();
 	}
 	
 	// fill up computers action cards
-	private void selectComputerCards(Player p) {
+	private void autoSelectActionCards(Player p) {
 		permanentCards = p.getCulture().getPermanentCards();
 		randomCards = p.getCulture().getRandomCards();
 		ArrayList<ActionCard> ac = p.getActionCards();
@@ -279,13 +295,18 @@ public class GamePlayView extends JPanel {
 		int numRand = numCards - numPerm;
 		System.out.println(p.getName() + " HAS " + numPerm + "p,  " + numRand + "r");
 		// permanent
+		int pSize = permanentCards.size();
 		for (int i = 0; i < numPerm; i++) {
+			ac.add(permanentCards.remove(new Random().nextInt(pSize--)));
+			System.out.println("per card size = " + permanentCards.size());
+			System.out.println("pSize = " + pSize);
 			//ac.add(permanentCards.remove(new Random().nextInt(permanentCards.size())));
-			ac.add(permanentCards.get(new Random().nextInt(permanentCards.size())));
+			//ac.add(permanentCards.get(new Random().nextInt(permanentCards.size())));
 		}
 		// random
+		int rSize = randomCards.size();
 		for (int i = 0; i < numRand; i++) {
-			ac.add(randomCards.remove(new Random().nextInt(randomCards.size())));
+			ac.add(randomCards.remove(new Random().nextInt(rSize--)));
 		}
 	}
 		
@@ -323,12 +344,11 @@ public class GamePlayView extends JPanel {
 					setupCardPanel();
 					if (human.getActionCards().size() == human.getAge()) {
 						System.out.println("select for computers + done clicked");
-						selectComputerCards(computer1);
-						selectComputerCards(computer2);
-						actionView.removeAll();
-						actionView.revalidate();
-						actionView.repaint();
-						testing();
+						autoSelectActionCards(computer1);
+						autoSelectActionCards(computer2);
+						actionView.clearView();
+						actionView.setPreview();
+						testing();	// testing only
 					}
 				}
 			}

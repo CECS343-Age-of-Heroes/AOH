@@ -26,6 +26,11 @@ public class BuildCard extends ActionCard {
 	}
 	
 	//
+	public String getValue() {
+		return String.valueOf(numOfBuildings);
+	}
+	
+	//
 	@Override
 	public String toString() {
 		return getName() + " " + numOfBuildings;

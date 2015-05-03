@@ -111,6 +111,16 @@ public class GatherActionView extends JPanel {
 						else if (resourceType.equalsIgnoreCase("all")) {
 							cubesValue = currentPlayer.getProductionValueAll();
 						}
+						// only do this for player who plays card ??
+						if (i == 0) {
+							// 
+							if (currentPlayer.doesPlayerHaveBuilding("Monument")) {
+								cubesValue.addToColor("blue", 2);
+							}
+							if (currentPlayer.doesPlayerHaveBuilding("Granary")) {
+								cubesValue.addToColor("green", 2);
+							}
+						}
 						
 						currentPlayer.getCubes().addCubesToCubes(cubesValue);
 						Main.gc.getBank().getCubes().removeCubesFromCubes(cubesValue);

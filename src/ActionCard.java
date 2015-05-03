@@ -32,6 +32,11 @@ public class ActionCard extends Card {
 	public boolean canPlay(Player player) { return false; };
 	
 	//
+	public String getValue() {
+		return "";
+	}
+	
+	//
 	public String toString() {
 		return "i";
 	}

@@ -26,6 +26,11 @@ public class GatherCard extends ActionCard {
 		return resourceType;
 	}
 	
+	//
+	public String getValue() {
+		return resourceType;
+	}
+	
 	//	
 	@Override
 	public String toString() {

@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+
 import javax.swing.*;
 /*
  * StartScreen:
@@ -35,8 +36,10 @@ public class StartScreen extends JPanel {
 	public StartScreen() {
 		setLayout(null);
 		setSize(new Dimension(1200, 800));
-		setBackground(Color.GREEN);
-		setBorder(BorderFactory.createMatteBorder(3, 4, 3, 4, Color.BLUE));
+//		setBackground(Color.BLUE);
+//		setBackground(new Color(0,0,210));
+		setBackground(GameViewController.getGameColor("blue"));
+		setBorder(BorderFactory.createMatteBorder(4,4,4,4, Color.GREEN));
 
 		add(setupHeaderLabel());	// add header
 		setupMainPanel();			//
@@ -46,10 +49,12 @@ public class StartScreen extends JPanel {
 	// SETUP // // // // // // // // // // // // // // // // // // // // // //
 	// returns the header label 
 	private JLabel setupHeaderLabel() {
-		JLabel headerLabel = new JLabel("- Age Of Heroes -", JLabel.CENTER);
-		headerLabel.setSize(this.getWidth(), 100);
-		headerLabel.setForeground(Color.BLUE);
-		headerLabel.setFont(new Font("Default", Font.BOLD, 35));
+		JLabel headerLabel = new JLabel("~ Age of Heroes ~", JLabel.CENTER);
+		headerLabel.setBounds(0, 50, 1200, 100);
+		headerLabel.setForeground(Color.GREEN);
+//		headerLabel.setForeground(GameViewController.getGameColor("green"));
+//		headerLabel.setForeground(new Color(50,205,50));
+		headerLabel.setFont(GameViewController.getGameFontSize(45));
 		return headerLabel;
 	}
 	
@@ -62,10 +67,11 @@ public class StartScreen extends JPanel {
 		int centerY = (this.getHeight() / 2 - mainPanel.getHeight() / 2);
 		mainPanel.setLocation(centerX, centerY);
 		mainPanel.setBackground(Color.WHITE);
-		mainPanel.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLUE));
+		mainPanel.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.GREEN));
 		
 		JLabel nameLabel = new JLabel("Name:", JLabel.CENTER);
-		
+		nameLabel.setBackground(Color.GREEN);
+		nameLabel.setFont(GameViewController.getGameFontSize(35));
 		JLabel chooseCultureLabel = new JLabel("Choose Culture:", JLabel.CENTER);
 		ButtonGroup buttonGroup = new ButtonGroup();	// holds 3 radio buttons
 		buttonGroup.add(greekButton);
@@ -93,9 +99,19 @@ public class StartScreen extends JPanel {
 		mainPanel.add(startButtonPanel);
 	}
 	
-	// game controller calls saveName
-	public void saveName() {
-		human.setName(nameTextField.getText());
+	//
+	public void setPlayersInfo() {
+		if (nameTextField.getText().isEmpty()) {
+			human.setName("Human");
+		}
+		else {
+			human.setName(nameTextField.getText());
+		}
+		if (human.getCulture() == null) {
+			human.setCulture("Greek");
+			comp1.setCulture("Norse");
+			comp2.setCulture("Egyptian");
+		}
 	}
 	
 	// assigns the unselected cultures to the computers
@@ -120,11 +136,7 @@ public class StartScreen extends JPanel {
 	{   
 		@Override
 		public void actionPerformed(ActionEvent e) {
-//			if (e.getSource() instanceof JButton) {
-//				if (((JButton)e.getSource()).equals(startButton)) {
-//					//human.setName(nameTextField.getText());
-//				}
-//			}
+			//
 			if (e.getSource() instanceof JRadioButton) {	
 				if ( ((JRadioButton)e.getSource()).isSelected() ) {
 					human.setName(nameTextField.getText());

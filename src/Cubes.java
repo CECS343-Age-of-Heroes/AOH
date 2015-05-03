@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.*;
 /*
  * Cubes:
@@ -49,6 +50,27 @@ public class Cubes extends ArrayList<Integer> {
 	}
 	
 	// add a value to a color of cube
+	public int getValueOfColor(String color) {
+		int value = 0;
+		if (color.equals("blue")) {
+			value = getBlue();
+		}
+		else if (color.equals("green")) {
+			value = getGreen();
+		}
+		else if (color.equals("brown")) {
+			value = getBrown();
+		}
+		else if (color.equals("yellow")) {
+			value = getYellow();
+		}
+		else if (color.equals("red")) {
+			value = getRed();
+		}
+		return value;
+	}
+	
+	// add a value to a color of cube
 	public void addToColor(String color, int value) {
 		if (color.equals("blue")) {
 			setBlue(getBlue() + value);
@@ -82,6 +104,7 @@ public class Cubes extends ArrayList<Integer> {
 		brown -= otherCubes.getBrown();
 		yellow -= otherCubes.getYellow();
 	}
+	
 	
 	// get and set green
 	public Integer getGreen() {
@@ -163,5 +186,25 @@ public class Cubes extends ArrayList<Integer> {
 			str += "R:" + getRed() + " \n";
 		}
 		return str;
+	}
+	
+	//
+	public static Color cubeColor(String color) {
+		if (color.equals("blue")) {
+			return Color.BLUE;
+		}
+		else if (color.equals("green")) {
+			return Color.GREEN;
+		}
+		else if (color.equals("brown")) {
+			return new Color(160,82,45);
+		}
+		else if (color.equals("yellow")) {
+			return Color.YELLOW;
+		}
+		else if (color.equals("red")) {
+			return Color.RED;
+		}
+		return Color.BLACK;
 	}
 }

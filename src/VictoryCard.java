@@ -1,4 +1,5 @@
 import java.awt.*;
+
 import javax.swing.*;
 /*
  * VictoryCard
@@ -18,34 +19,53 @@ public class VictoryCard extends Card {
 	private Integer cubeCount = 0;
 	private JLabel valueLabel;
 	private JLabel nameLabel; 
-	//private JTextArea nameLabel;
+	private JPanel cube = new JPanel();
 	
 	// constructor
 	public VictoryCard(String name) {
 		setLayout(new BorderLayout());
 		setName(name);
-		//victoryCard.setSize(new Dimension(250, 350));
-		
+				
 		nameLabel = new JLabel(getName(), JLabel.CENTER);
-		//nameLabel = new JLabel("<html>" + getName() + "</html>", JLabel.CENTER);
-		//nameLabel = new JTextField(getName(), JLabel.CENTER);
+		nameLabel.setFont(GameViewController.getGameFontSize(30));
+		nameLabel.setForeground(Color.BLUE);
+		nameLabel.setBorder(BorderFactory.createEmptyBorder(80, 0, 0, 0));		
 		
-		//nameLabel = new JTextArea(getName());
-		//nameLabel.setOpaque(false);
-		//nameLabel.setLineWrap(true);
-		//nameLabel.setWrapStyleWord(true);
+		JPanel cubesPanel = new JPanel();
+		cubesPanel.setOpaque(false);
+//		cubesPanel.setLayout(new BorderLayout());
 		
-		nameLabel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
-		valueLabel = new JLabel("Red x" + String.valueOf(getCubeCount()), 
-							    JLabel.CENTER);
-
+		valueLabel = new JLabel(" x " + String.valueOf(getCubeCount()), JLabel.CENTER);
+		valueLabel.setFont(GameViewController.getGameFontSize(24));
+		valueLabel.setForeground(Color.BLUE);
+			
+		cube.setPreferredSize(new Dimension(18,18));
+		cube.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
+		cube.setBackground(Color.RED);
+	
+		cubesPanel.add(cube, BorderLayout.CENTER);
+		cubesPanel.add(valueLabel, BorderLayout.CENTER);
+		
 		add(nameLabel, BorderLayout.NORTH);
-		add(valueLabel, BorderLayout.CENTER);
+		add(cubesPanel, BorderLayout.CENTER);
 	}
 	
-	// update font
-	public void updateFont(Font vcf) {
-		nameLabel.setFont(vcf);
+	// 
+	public void updateBankVC() {
+		nameLabel.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
+		nameLabel.setForeground(Color.BLACK);
+		valueLabel.setForeground(Color.BLACK);
+		nameLabel.setFont(GameViewController.getGameFontSize(10));
+		valueLabel.setFont(GameViewController.getGameFontSize(14));
+//		valueLabel.setFont(new Font("Default", Font.PLAIN, 8));
+		cube.setPreferredSize(new Dimension(9,9));
+	}
+	
+	public void updateViewVC() {
+		nameLabel.setBorder(BorderFactory.createEmptyBorder(80, 0, 0, 0));
+		nameLabel.setFont(GameViewController.getGameFontSize(30));
+		valueLabel.setFont(GameViewController.getGameFontSize(24));
+		cube.setPreferredSize(new Dimension(18,18));
 	}
 		
 	// return cube count
@@ -60,7 +80,7 @@ public class VictoryCard extends Card {
 	
 	// update value label
 	public void updateValueLabel() {
-		valueLabel.setText("Red x" + String.valueOf(getCubeCount()));
+		valueLabel.setText(" x " + String.valueOf(getCubeCount()));
 	}
 	
 }

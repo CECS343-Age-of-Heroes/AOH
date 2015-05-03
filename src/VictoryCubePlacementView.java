@@ -26,21 +26,30 @@ public class VictoryCubePlacementView extends JPanel {
 	
 	// constructor
 	public VictoryCubePlacementView() {
+//		System.out.println("Click COunt = : " + clickCount);
 		setLayout(null);
-		setSize(1200, 822); // ??
-		setBackground(Color.GREEN);
-		setBorder(BorderFactory.createMatteBorder(3, 4, 5, 6, Color.BLUE));
+		setSize(1200, 822);
+		setBackground(GameViewController.getGameColor("blue"));
+		setBorder(BorderFactory.createMatteBorder(3, 4, 5, 6, Color.GREEN));
 		
-		JLabel headerLabel = new JLabel("- Victory Cube Placement -",
+		JLabel headerLabel = new JLabel("~ Victory Cube Placement ~",
 										JLabel.CENTER);
-		headerLabel.setSize(1200, 100);
-		Font hF = new Font("Default", Font.BOLD, 35);
-		headerLabel.setFont(hF);
-		headerLabel.setForeground(Color.BLUE);
+		headerLabel.setBounds(0, 50, 1200, 100);
+		headerLabel.setFont(GameViewController.getGameFontSize(45));
+		headerLabel.setForeground(Color.GREEN);
 		
 		// add action listener for buttons
-		theWonder.addActionListener(new OptionListener());
-		mostBuildings.addActionListener(new OptionListener());
+		theWonder.setEnabled(true);
+		mostBuildings.setEnabled(true);
+		theWonder.updateViewVC();
+		mostBuildings.updateViewVC();
+//		if (theWonder.getActionListeners().length == 0) {
+			theWonder.addActionListener(new OptionListener());
+//		}
+//		if (mostBuildings.getActionListeners().length == 0) {
+			mostBuildings.addActionListener(new OptionListener());
+//		}
+		
 		// set size for card/buttons
 		theWonder.setBounds(300, 200, 250, 350);
 		mostBuildings.setBounds(650, 200, 250, 350);
@@ -48,7 +57,7 @@ public class VictoryCubePlacementView extends JPanel {
 		victoryDoneButton.setSize(200, 50);
 		int centerX = getWidth() / 2 - victoryDoneButton.getWidth() / 2;
 		victoryDoneButton.setLocation(centerX, 650);
-		victoryDoneButton.setVisible(false);	// hide button until 3 cubes
+		victoryDoneButton.setVisible(false);	// hide button until 3 cubes placed
 		
 		// add all components
 		add(headerLabel);
@@ -76,6 +85,7 @@ public class VictoryCubePlacementView extends JPanel {
 	{   
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("victory card clicked");
 			// dont do anything if click count is reached 
 			if (clickCount < maxClicks) {
 				if (e.getSource() instanceof JButton) {
@@ -89,7 +99,6 @@ public class VictoryCubePlacementView extends JPanel {
 						mostBuildings.updateValueLabel();
 					}
 					// take a red cube from bank and put it on the card
-					//cubes.setRed(cubes.getRed() - 1);
 					Main.gc.getBank().removeCubes("red", 1);
 					clickCount++;		// increment click count
 				}

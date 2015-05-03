@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
  * Bank:
  * - holds the number of cubes available for the game
@@ -53,6 +55,39 @@ public class Bank { //extends JPanel {
 		}
 	}
 
+	//
+	public void spoilage() {
+		ArrayList<Player> players = Main.gc.getPlayersList();
+		
+		for (Player p : players) {
+			Cubes pc = p.getCubes();
+			Integer blue = 0, green = 0, brown = 0, yellow = 0;
+			
+			int max = (p.doesPlayerHaveBuilding("Storehouse")) ? 8 : 5;
+			
+			if (pc.getBlue() > max) {
+				blue = pc.getBlue() - max;
+				pc.setBlue(max);
+			}
+			if (pc.getGreen() > max) {
+				green = pc.getGreen() - max;
+				pc.setGreen(max);
+			}
+			if (pc.getBrown() > max) {
+				brown = pc.getBrown() - max;
+				pc.setBrown(max);
+			}
+			if (pc.getYellow() > max) {
+				yellow = pc.getYellow() - max;
+				pc.setYellow(max);
+			}
+			
+			Cubes removed = new Cubes(blue, green, brown, yellow, 0);
+			Main.gc.getBank().getCubes().addCubesToCubes(removed);
+		}
+		
+	}
+	
 	// return "the wonder" victory card
 	public VictoryCard getTheWonder() {
 		return theWonder;

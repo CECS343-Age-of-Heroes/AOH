@@ -69,6 +69,10 @@ public class GameController {
 		playersList.set(0, playersList.get(1));
 		playersList.set(1, playersList.get(2));
 		playersList.set(2, temp);
+		
+		playersList.get(0).setPlace(1);;
+		playersList.get(1).setPlace(2);
+		playersList.get(2).setPlace(3);
 	}
 	
 	public Player getNextPlayer(Player currentPlayer) {

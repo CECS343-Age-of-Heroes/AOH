@@ -35,14 +35,14 @@ public class TradeActionView extends JPanel {
 			rbPanel.setOpaque(false);
 			//rbPanel.setPreferredSize(new Dimension(300,30));
 			JRadioButton yesRB = new JRadioButton("Yes");
-			JRadioButton noRB = new JRadioButton("No");
+//			JRadioButton noRB = new JRadioButton("No");
 			yesRB.addActionListener(new TradeCardListener());
-			noRB.addActionListener(new TradeCardListener());
-			ButtonGroup choices = new ButtonGroup();
-			choices.add(yesRB);
-			choices.add(noRB);
+//			noRB.addActionListener(new TradeCardListener());
+//			ButtonGroup choices = new ButtonGroup();
+//			choices.add(yesRB);
+//			choices.add(noRB);
 			rbPanel.add(yesRB);
-			rbPanel.add(noRB);
+//			rbPanel.add(noRB);
 			add(rbPanel);
 		}
 		
@@ -178,6 +178,7 @@ public class TradeActionView extends JPanel {
 							
 //							doneButton.setText("Done");
 							av.updateBoardAndBank();
+							button.setEnabled(false);
 						}
 						else {
 							// number to send and recieve do not match

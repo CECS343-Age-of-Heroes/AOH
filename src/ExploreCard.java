@@ -25,6 +25,11 @@ public class ExploreCard extends ActionCard {
 	}
 	
 	//
+	public String getValue() {
+		return String.valueOf(numOfTiles);
+	}
+	
+	//
 	@Override
 	public String toString() {
 		return getName() + " " + numOfTiles;

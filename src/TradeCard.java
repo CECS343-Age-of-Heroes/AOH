@@ -26,6 +26,11 @@ public class TradeCard extends ActionCard {
 	}
 	
 	//
+	public String getValue() {
+		return String.valueOf(tradeCost);
+	}
+	
+	//
 	@Override
 	public String toString() {
 		return getName() + " " + tradeCost;

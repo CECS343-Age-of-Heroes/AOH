@@ -27,6 +27,11 @@ public class NextAgeCard extends ActionCard {
 		return cost;
 	}
 	
+	//
+	public String getValue() {
+		return String.valueOf(cost);
+	}
+	
 	// 345 random card	// cost is playerAge - 1
 	// 456 permanent card	// cost is same as player age
 	//

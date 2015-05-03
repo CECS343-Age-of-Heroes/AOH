@@ -83,6 +83,43 @@ public class GameBuildingTiles extends ArrayList<BuildingTile> {
 	public ArrayList<BuildingTile> getBuildingsList() {
 		return buildingsList;
 	}
+	
+	public String getShortBuildingName(String name) {
+		String str = "";
+		if (name.equals("House")) {
+			str = "HSE";
+		}
+		else if (name.equals("Great Temple")) {
+			str = "GT";
+		}
+		else if (name.equals("The Wonder")) {
+			str = "WNDR";
+		}
+		else if (name.equals("Storehouse")) {
+			str = "STRH";
+		}
+		else if (name.equals("Gold Mint")) {
+			str = "GD MT";
+		}
+		else if (name.equals("Wood Workshop")) {
+			str = "WD WS";
+		}
+		else if (name.equals("Granary")) {
+			str = "GRNY";
+		}
+		else if (name.equals("Quarry")) {
+			str = "QURY";
+		}
+		else if (name.equals("Monument")) {
+			str = "MUMT";
+		}
+		else if (name.equals("Market")) {
+			str = "MKT";
+		}
+		
+		return str;
+	}
+	
 }
 
 

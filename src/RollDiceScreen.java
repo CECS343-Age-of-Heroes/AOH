@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+
 import javax.swing.*;
 /*
  * RollDiceScreen:
@@ -32,8 +33,9 @@ public class RollDiceScreen extends JPanel {
 	public RollDiceScreen() {
 		setLayout(null);
 		setSize(1200, 822);
-		setBackground(Color.GREEN);
-		setBorder(BorderFactory.createMatteBorder(3, 4, 5, 6, Color.BLUE));
+//		setBackground(Color.BLUE);
+		setBackground(GameViewController.getGameColor("blue"));
+		setBorder(BorderFactory.createMatteBorder(4,4,4,4, Color.GREEN));
 
 		// set up roll button
 		rollButton.addActionListener(new OptionListener());
@@ -44,7 +46,7 @@ public class RollDiceScreen extends JPanel {
 		// view header
 		add(setupHeaderLabel());
 		// player header
-		add(setupPlayerLabel());
+		add(setupTableHeaderLabels());
 		add(rollButton);
 		addPanels();
 	}
@@ -52,7 +54,7 @@ public class RollDiceScreen extends JPanel {
 	// setup // // // // // // // // // // // // // // // // // // // // // //
 	// setup and add 3 panels
 	private void addPanels() {
-		setupNamesPanel();
+		setupPlayersPanel();
 		add(playersPanel);
 		
 		setupRollPanel();
@@ -64,29 +66,56 @@ public class RollDiceScreen extends JPanel {
 	
 	// return header label for view
 	private JLabel setupHeaderLabel() {
-		JLabel headerLabel = new JLabel("- Roll for Starting Player -", 
+		JLabel headerLabel = new JLabel("~ Roll for Starting Player ~", 
 							 		    JLabel.CENTER);
-		headerLabel.setSize(1200, 100);
-		headerLabel.setForeground(Color.BLUE);
-		headerLabel.setFont(new Font("Default", Font.BOLD, 35));
+		headerLabel.setBounds(0, 50, 1200, 100);
+		headerLabel.setForeground(Color.GREEN);
+		headerLabel.setFont(GameViewController.getGameFontSize(45));
 		return headerLabel;
 	}
 	
 	// return player label for view
-	private JLabel setupPlayerLabel() {
-		JLabel playerHeader = new JLabel("Players:");
-		playerHeader.setBounds(200, 200, 300, 50);
-		playerHeader.setForeground(Color.BLUE);
-		playerHeader.setFont(new Font("Default", Font.BOLD, 20));
-		return playerHeader;
+	private JPanel setupTableHeaderLabels() {
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setOpaque(false);
+		panel.setBounds(200, 200, 800, 50);
+		
+		JPanel playerHeader = setupTabelLabel("Players");
+		playerHeader.setBounds(0, 0, 140, 50);
+		JPanel rollHeader = setupTabelLabel("Roll");
+		rollHeader.setBounds(200, 0, 300, 50);
+		JPanel placeHeader = setupTabelLabel("Place");
+		placeHeader.setBounds(500, 0, 300, 50);
+		
+		panel.add(playerHeader);
+		panel.add(rollHeader);
+		panel.add(placeHeader);
+//		JLabel playerHeader = new JLabel("Players:");
+////		playerHeader.setBounds(200, 200, 300, 50);
+//		playerHeader.setForeground(Color.GREEN);
+//		playerHeader.setFont(GameViewController.getGameFontSize(40));
+		
+		return panel;
+	}
+	
+	private JPanel setupTabelLabel(String text) {
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		JLabel label = new JLabel(text, JLabel.CENTER);
+//		playerHeader.setBounds(200, 200, 300, 50);
+		label.setForeground(Color.GREEN);
+		label.setFont(GameViewController.getGameFontSize(40));
+		panel.add(label);
+		return panel;
 	}
 	
 	// NAMES PANEL // // // // // // // // // // // // // // // // // // // // 
 	// sets up the panel with players name and culture
-	private void setupNamesPanel() {
+	private void setupPlayersPanel() {
 		playersPanel.setLayout(new GridLayout(3,1));
 		playersPanel.setBounds(200, 250, 200, 300);
-		playersPanel.setBackground(Color.BLUE);
+		playersPanel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 0, Color.GREEN));
 		// create and add all users
 		playersPanel.add(singleUserPanel(human.getName(), human.getCulture()));
 		playersPanel.add(singleUserPanel(comp1.getName(), comp1.getCulture()));
@@ -96,16 +125,19 @@ public class RollDiceScreen extends JPanel {
 	// return a panel with a single players information
 	private JPanel singleUserPanel(String name, Culture culture) {
 		JPanel userPanel = new JPanel();
-		userPanel.setLayout(new GridLayout(5,1));
-		userPanel.setBackground(Color.BLUE);
-		JLabel nameLabel = new JLabel("User: " + name);
-		nameLabel.setForeground(Color.WHITE);
-		JLabel cultureLabel = new JLabel("Culture: " + culture);
-		cultureLabel.setForeground(Color.WHITE);
+		userPanel.setBorder(BorderFactory.createMatteBorder(3,3,3,0, Color.BLUE));
+		userPanel.setLayout(new BorderLayout());
 		
-		userPanel.add(new JLabel()); // blank
-		userPanel.add(nameLabel);
-		userPanel.add(cultureLabel);
+		JLabel nameLabel = new JLabel(name);
+		nameLabel.setFont(GameViewController.getGameFontSize(35));
+		nameLabel.setForeground(Color.BLUE);
+		
+		JLabel cultureLabel = new JLabel(culture.getName());
+		cultureLabel.setFont(GameViewController.getGameFontSize(25));
+		cultureLabel.setForeground(Color.BLUE);
+	
+		userPanel.add(nameLabel, BorderLayout.NORTH);
+		userPanel.add(cultureLabel, BorderLayout.CENTER);
 		return userPanel;
 	}
 	// // // // // // // // // // // // // // // // // // // // // // // // //
@@ -115,28 +147,37 @@ public class RollDiceScreen extends JPanel {
 	public void setupRollPanel() {
 		rollPanel.setLayout(new GridLayout(3,1));
 		rollPanel.setBounds(400, 250, 300, 300);
-		rollPanel.setBackground(Color.BLUE);
+		rollPanel.setBorder(BorderFactory.createMatteBorder(5,0,5,0, Color.GREEN));
+		updateRollPanel();
 	}
 	
 	// updates roll panel after rolling dice
 	public void updateRollPanel() {
 		rollPanel.removeAll();
-		JLabel humanRoll = new JLabel(human.getName() + " rolled: " 
-				  					  + Integer.toString(human.getRoll()));
-		JLabel comp1Roll = new JLabel(comp1.getName() + " rolled: " 
-		  		  					  + Integer.toString(comp1.getRoll()));
-		JLabel comp2Roll = new JLabel(comp2.getName() + " rolled: " 
-		  		  					  + Integer.toString(comp2.getRoll()));
-		humanRoll.setForeground(Color.WHITE);
-		comp1Roll.setForeground(Color.WHITE);
-		comp2Roll.setForeground(Color.WHITE);
-		rollPanel.add(humanRoll);
-		rollPanel.add(comp1Roll);
-		rollPanel.add(comp2Roll);
+		
+		rollPanel.add(playerRollPanel(human));
+		rollPanel.add(playerRollPanel(comp1));
+		rollPanel.add(playerRollPanel(comp2));
 		
 		rollPanel.revalidate();
 		rollPanel.repaint();
 	}
+	
+	private JPanel playerRollPanel(Player player) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		panel.setOpaque(false);
+		panel.setBorder(BorderFactory.createMatteBorder(3,0,3,0, Color.BLUE));
+		JLabel rollLabel = new JLabel(Integer.toString(player.getRoll()), JLabel.CENTER);
+		if (player.getRoll() == 0) {
+			rollLabel.setText("");
+		}
+		rollLabel.setFont(GameViewController.getGameFontSize(40));
+		rollLabel.setForeground(Color.BLUE);
+		panel.add(rollLabel, BorderLayout.CENTER);
+		return panel;
+	}
+	
 	// // // // // // // // // // // // // // // // // // // // // // // // //
 	
 	// PLACE PANEL // // // // // // // // // // // // // // // // // // // // // // // //
@@ -144,29 +185,37 @@ public class RollDiceScreen extends JPanel {
 	public void setupPlacePanel() {
 		placePanel.setLayout(new GridLayout(3,1));
 		placePanel.setBounds(700, 250, 300, 300);
-		placePanel.setBackground(Color.BLUE);
+		placePanel.setBorder(BorderFactory.createMatteBorder(5,0,5,5, Color.GREEN));
+		updatePlacePanel();
 	}
 	
 	// updates place panel after rolling
 	public void updatePlacePanel() {
 		placePanel.removeAll();
+					
+		placePanel.add(playerPlacePanel(human));
+		placePanel.add(playerPlacePanel(comp1));			
+		placePanel.add(playerPlacePanel(comp2));
 		
-		if (checkForTie() == 0) {
-			JLabel humanPlaceLabel = new JLabel(human.getName() + " Place: " +  
-									 Integer.toString(human.getPlace()));
-			JLabel comp1PlaceLabel = new JLabel(comp1.getName() + " Place: " +  
-									 Integer.toString(comp1.getPlace()));
-			JLabel comp2PlaceLabel = new JLabel(comp2.getName() + " Place: " +  
-									 Integer.toString(comp2.getPlace()));
-			humanPlaceLabel.setForeground(Color.WHITE);
-			comp1PlaceLabel.setForeground(Color.WHITE);
-			comp2PlaceLabel.setForeground(Color.WHITE);
-			placePanel.add(humanPlaceLabel);
-			placePanel.add(comp1PlaceLabel);
-			placePanel.add(comp2PlaceLabel);
-		}
 		placePanel.revalidate();
 		placePanel.repaint();	
+	}
+	
+	//
+	private JPanel playerPlacePanel(Player player) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		panel.setOpaque(false);
+		panel.setBorder(BorderFactory.createMatteBorder(3,0,3,3, Color.BLUE));
+		JLabel placeLabel = new JLabel("#" + Integer.toString(player.getPlace()),
+									JLabel.CENTER);
+		if (player.getPlace() == 0) {
+			placeLabel.setText("");
+		}
+		placeLabel.setFont(GameViewController.getGameFontSize(40));
+		placeLabel.setForeground(Color.BLUE);
+		panel.add(placeLabel, BorderLayout.CENTER);
+		return panel;
 	}
 	// // // // // // // // // // // // // // // // // // // // // // // // //
 	
@@ -253,10 +302,6 @@ public class RollDiceScreen extends JPanel {
 					}
 					updatePanels();
 				}
-				// delete this, not needed
-				//else if (( (JButton)e.getSource()).getText() == "Done") {
-					//System.out.println("Done - Rolling");
-				//}
 			}
 		}	
 	}

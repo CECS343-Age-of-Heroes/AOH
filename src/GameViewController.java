@@ -6,6 +6,7 @@
  */
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 /*
@@ -25,7 +26,8 @@ public class GameViewController extends JFrame {
 	private TileSelectionView tileSelectionView;
 	private VictoryCubePlacementView victoryCubePlacementView;
 	//private GamePlayView gamePlayView;
-	private GamePlayView gamePlayView;// = new GamePlayView();
+//	private GamePlayView gamePlayView;// = new GamePlayView();
+	public GamePlayView gamePlayView;// = new GamePlayView();
 	
 	// constructor
 	public GameViewController() {
@@ -41,16 +43,61 @@ public class GameViewController extends JFrame {
 		startScreen = new StartScreen();
 		startScreen.startButton.addActionListener(new GameOptionListener());
 		
+//		setupFakeGame();
 		gamePlayView = new GamePlayView();
+		
 		add(gamePlayView);
+		
+//		victoryCubePlacementView = new VictoryCubePlacementView();
+//		victoryCubePlacementView.victoryDoneButton.
+//				addActionListener(new GameOptionListener());
+//		add(victoryCubePlacementView);
+		
 //		add(startScreen);
         pack();
         setVisible(true);
 	}
 	
+	
 	//
 	public GamePlayView getGamePlayView() {
 		return gamePlayView;
+	}
+	
+	//
+	public static Font getGameFontSize(int size) {
+		return new Font("Serif", Font.PLAIN, size);
+	}
+	
+	//
+	public static Color getGameColor(String color) {
+		if (color.equalsIgnoreCase("blue")) {
+			return new Color(0,0,210);
+		}
+		else if (color.equalsIgnoreCase("green")) {
+			return new Color(224,224,224);
+		}
+		else {
+			return new Color(0,0,0);
+		}
+	}
+	
+	//
+	public void backToVictoryCubePlacement() {
+		System.out.println("Go to victory cube placement view AGAIN");
+//		getContentPane().remove(tileSelectionView);
+		getContentPane().removeAll();
+//		if (victoryCubePlacementView == null) {
+			victoryCubePlacementView = new VictoryCubePlacementView();
+//		}
+//		if (victoryCubePlacementView.victoryDoneButton.getActionListeners().length == 0) {
+			victoryCubePlacementView.victoryDoneButton.
+					addActionListener(new GameOptionListener());
+//		}
+		
+		getContentPane().add(victoryCubePlacementView);
+        invalidate();
+        validate();
 	}
 
 	// game button listener to respond when a button is pressed on a different
@@ -65,10 +112,9 @@ public class GameViewController extends JFrame {
 				
 				// start screen -> roll dice screen
 				if (button.equals(startScreen.startButton)) {
-					startScreen.saveName();   // save human name from TextField
 					System.out.println("Go to roll dice screen");
+					startScreen.setPlayersInfo();
 					getContentPane().remove(startScreen);
-					
 					rollDiceScreen = new RollDiceScreen();
 					rollDiceScreen.rollButton.
 									addActionListener(new GameOptionListener());
@@ -107,8 +153,13 @@ public class GameViewController extends JFrame {
 				else if (button.getText() == "Finish") {
 				//else if (b.equals(victoryCubePlacementView.victoryDoneButton)) {
 					System.out.println("Go to game play view");
-					getContentPane().remove(victoryCubePlacementView);
-					//gamePlayView = new GamePlayView();
+					
+//					getContentPane().remove(victoryCubePlacementView);
+					getContentPane().removeAll();
+					
+//					if (gamePlayView == null) {
+						gamePlayView = new GamePlayView();
+//					}
 					
 					getContentPane().add(gamePlayView);
 	                invalidate();

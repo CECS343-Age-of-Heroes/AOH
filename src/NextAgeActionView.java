@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -17,21 +18,76 @@ public class NextAgeActionView extends JPanel {
 		setLayout(null);
 		setBounds(0, 150, 300, 600);
 		setBackground(Color.YELLOW);
+//		setOpaque(false);
 		
 		int theCost = 0;
-		JTextArea costLabel = new JTextArea();
+		
 		if (upgradeCost == 345) {
 			theCost = currentPlayer.getAge() - 1;
 		}
 		else if (upgradeCost == 456) {
 			theCost = currentPlayer.getAge();
 		}
-		
 		Cubes cubeCost = new Cubes(theCost, theCost, theCost, theCost, 0);
-		costLabel.setBounds(0, 0, 300, 200);
-		costLabel.setText("Cost: \n" + cubeCost.toString());
-		add(costLabel);
-				
+		
+		JPanel costPanel = new JPanel();
+		costPanel.setLayout(new GridLayout(6,1));
+		costPanel.setBounds(0, 50, 300, 200);
+//		costPanel.setOpaque(false);
+		
+		JLabel cost = new JLabel("Upgrade Cost:");
+//		cost.setfor
+		cost.setFont(GameViewController.getGameFontSize(35));
+		costPanel.add(cost);
+		
+
+		for (int i = 0 ; i < 4; i++) {
+			JPanel cubePanel = new JPanel();
+			cubePanel.setOpaque(false);
+			JPanel cube = new JPanel();
+			cube.setPreferredSize(new Dimension(25,25));
+			cube.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, false));
+			JLabel cubeValue = new JLabel();
+//			cubeValue.setForeground(Color.WHITE);
+			cubeValue.setFont(GameViewController.getGameFontSize(25));
+			switch (i) {
+				case 0:
+					cube.setBackground(Cubes.cubeColor("blue"));
+					cubeValue.setText(" x" + Integer.toString(cubeCost.getBlue()));
+					break;
+				case 1:
+					cube.setBackground(Cubes.cubeColor("green"));
+					cubeValue.setText(" x" + Integer.toString(cubeCost.getGreen()));
+					break;
+				case 2:
+					cube.setBackground(Cubes.cubeColor("brown"));
+					cubeValue.setText(" x" + Integer.toString(cubeCost.getBrown()));
+					break;
+				case 3:
+					cube.setBackground(Cubes.cubeColor("yellow"));
+					cubeValue.setText(" x" + Integer.toString(cubeCost.getYellow()));
+					break;
+				default:
+					break;
+			}
+			
+			cubePanel.add(cube);
+			cubePanel.add(cubeValue);
+			
+			costPanel.add(cubePanel);
+		}
+		
+		add(costPanel);
+		
+		
+		
+//		JTextArea costLabel = new JTextArea();
+		
+//		costLabel.setBounds(0, 0, 300, 200);
+//		costLabel.setText("Cost: \n" + cubeCost.toString());
+//		add(costLabel);
+		
+		
 		JButton button = new JButton("Confirm");
 		button.setBounds(50, 250, 200, 50);
 		

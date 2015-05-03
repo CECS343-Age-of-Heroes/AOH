@@ -206,6 +206,7 @@ public class Player {
 					   cubes.getYellow() - remove.getYellow());
 	}
 	
+	
 	//
 	public boolean hasEnoughResources(Cubes cubesCost) {
 		return (cubes.getBlue() >= cubesCost.getBlue() &&
@@ -223,7 +224,16 @@ public class Player {
 		this.buildingTiles = buildingTiles;
 	}
 
-
+	//
+	public boolean doesPlayerHaveBuilding(String building) {
+		for (BuildingTile bt : getBuildingTiles()) {
+			if (bt.getName().equals(building)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	// comparator for sorting the list by dice roll scored
     public static Comparator<Player> playerRollComparator = new Comparator<Player>() {
     	public int compare(Player p1, Player p2) {

@@ -59,8 +59,7 @@ public class TileSelectionView extends JPanel {
 	// constructor
 	public TileSelectionView() {
 		setLayout(null);
-		//setPreferredSize(new Dimension(1200, 800));
-		
+		setBackground(GameViewController.getGameColor("blue"));
 		// setup
 		setupPlayerPanel();
 		getInitialProductionTiles();
@@ -74,7 +73,6 @@ public class TileSelectionView extends JPanel {
 	// removes 18 tiles from the GameTiles ArrayList
 	private void getInitialProductionTiles() {
 		for (int i = 0; i < numberOfTiles; i++) {
-			//Tile t = GameController.removeGameTile();
 			// removes a tile from game tiles,
 			ProductionTile t = gc.getGameProductionTiles().remove(0);
 			// adds it to tiles to pick and unused tiles
@@ -87,23 +85,13 @@ public class TileSelectionView extends JPanel {
 	private void initialTilePanel() {
 		tilesPanel.setLayout(null);
 		tilesPanel.setBounds(400, 0, 800, 800);
-		tilesPanel.setBackground(Color.GREEN);
-		tilesPanel.setBorder(BorderFactory.createMatteBorder(3, 4, 5, 6, Color.BLUE));
+		tilesPanel.setOpaque(false);
+		tilesPanel.setBorder(BorderFactory.createMatteBorder(3,3,3,3, Color.GREEN));
 		
-		JLabel headerLabel = new JLabel("- Tile Selection - ", JLabel.CENTER);
-		headerLabel.setSize(800, 100);
-		headerLabel.setForeground(Color.BLUE);
-		headerLabel.setFont(new Font("Default", Font.BOLD, 35));
-		
-		JTextArea text = new JTextArea();
-		text.setText("Each player will select up to 6 tiles each.\n"
-					+ "You may select a tile or pass when it is your turn.\n"
-					+ "The selected tile must have an available spot on \nyour"
-					+ " cultures production area.\n"
-					+ "Click start to begin tile selection.");
-		text.setBounds(150, 200, 500, 100);
-		text.setBackground(Color.GREEN);
-		text.setForeground(Color.BLUE);
+		JLabel headerLabel = new JLabel("~ Production Tile Selection ~ ", JLabel.CENTER);
+		headerLabel.setBounds(0, 50, 800, 100);
+		headerLabel.setForeground(Color.GREEN);
+		headerLabel.setFont(GameViewController.getGameFontSize(45));
 		
 		JButton startButton = new JButton("Start");
 		startButton.setSize(200, 50);
@@ -113,7 +101,6 @@ public class TileSelectionView extends JPanel {
 		startButton.addActionListener(new OptionListener());
 		
 		tilesPanel.add(headerLabel);
-		tilesPanel.add(text);
 		tilesPanel.add(startButton);
 	}
 	// // // // // // // // // // // // // // // // // // // // // // // // // 
@@ -123,7 +110,8 @@ public class TileSelectionView extends JPanel {
 	private void setupPlayerPanel() {
 		playerTilesPanel.setLayout(new GridLayout(3, 1));
 		playerTilesPanel.setBounds(0, 0, 400, 800);
-		playerTilesPanel.setBackground(Color.GREEN);
+//		playerTilesPanel.setBackground(Color.BLUE);
+		playerTilesPanel.setOpaque(false);
 		
 		updatePlayerPanel(p1Panel, p1, new ProductionTile());
 		updatePlayerPanel(p2Panel, p2, new ProductionTile());
@@ -137,20 +125,27 @@ public class TileSelectionView extends JPanel {
 	private void updatePlayerPanel(JPanel pPanel, Player player, ProductionTile tile) {
 		pPanel.removeAll();
 		pPanel.setLayout(null);
+		pPanel.setOpaque(false);
 		
-		JPanel pName = new JPanel();
-		pName.setBounds(0, 0, 133, 267);
-		pName.setBackground(Color.GREEN);
-		pName.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2, false));
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		panel.setBounds(0, 0, 133, 267);
+		panel.setOpaque(false);
+		panel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2, false));
 		
-		JTextArea pText = new JTextArea(player.getName() +"\n"+ player.getCulture().getName());
-		pText.setForeground(Color.BLUE);
-		pText.setBackground(Color.GREEN);
-		pText.setOpaque(true);
-		pText.setFont(new Font("Default", Font.PLAIN, 18));
-		pName.add(pText);
+		JLabel name = new JLabel(player.getName(), JLabel.CENTER);
+		name.setFont(GameViewController.getGameFontSize(30));
+		name.setForeground(Color.WHITE);
+		name.setBorder(BorderFactory.createEmptyBorder(0, 0, 50, 0));
 		
-		pPanel.add(pName);
+		JLabel cultureName = new JLabel(player.getCulture().getName(), JLabel.CENTER);
+		cultureName.setFont(GameViewController.getGameFontSize(20));
+		cultureName.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+		cultureName.setForeground(Color.WHITE);
+			
+		panel.add(name, BorderLayout.CENTER);
+		panel.add(cultureName, BorderLayout.NORTH);
+		pPanel.add(panel);
 		pPanel.add(setupPlayerProductionArea(player, tile));
 		
 		pPanel.revalidate();
@@ -187,35 +182,43 @@ public class TileSelectionView extends JPanel {
 		for (int i = 0; i < tilesList.size(); i++) {
 			// one square in the production panel
 			JPanel productionSquare = new JPanel();
+			productionSquare.setLayout(new BorderLayout());
+			productionSquare.setBackground(new Color(199,199,199));
 			productionSquare.setBorder(BorderFactory.
-									   createLineBorder(Color.BLUE, 2, true));
-			// text inside production square
-			JTextArea title = new JTextArea();
-			title.setEditable(false);
-			title.setFont(new Font("Default", Font.PLAIN, 12));
-			title.setOpaque(true);
+					   createLineBorder(Color.BLUE, 1, true));
 			
+			// text inside production square			
+			JLabel nameLabel = new JLabel("", JLabel.CENTER);
+			nameLabel.setFont(GameViewController.getGameFontSize(11));
+//			nameLabel.setForeground(Color.BLUE);
+			nameLabel.setForeground(GameViewController.getGameColor("blue"));
+			nameLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 5, 0));
+			
+			JPanel cubesPanel = new JPanel();
+			cubesPanel.setOpaque(false);
 			// if no tile in that spot set text from list
 			if (tilesList.get(i).getType() == "") {
-				title.setText(list.get(i));
-				title.setForeground(Color.BLUE);
-				title.setBackground(Color.WHITE);
-				productionSquare.setBackground(Color.WHITE);
+				nameLabel.setText(list.get(i).toUpperCase());
 			}
 			// set text from tile details
 			else {
-				title.setText(tilesList.get(i).toString());
-				title.setForeground(Color.WHITE);
-				title.setBackground(Color.BLUE);
-				productionSquare.setBackground(Color.BLUE);
-				productionSquare.setBorder(BorderFactory.
-						   createLineBorder(Color.GREEN, 2, true));
+				nameLabel.setText(tilesList.get(i).getType().toUpperCase());
+				
+				for (int j = 0; j < tilesList.get(i).getValue(); j++) {
+					JPanel cubePanel = new JPanel();
+					cubePanel.setPreferredSize(new Dimension(10,10));
+					cubePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
+					
+					cubePanel.setBackground(Cubes.cubeColor(tilesList.get(i).getColor()));
+					cubesPanel.add(cubePanel, BorderLayout.CENTER);
+				}
+				productionSquare.setBackground(Color.WHITE);
 			}
+			productionSquare.add(nameLabel, BorderLayout.NORTH);
+			productionSquare.add(cubesPanel, BorderLayout.CENTER);
 			
-			productionSquare.add(title);
 			productionPanel.add(productionSquare);
 		}
-	
 		return productionPanel;
 	}
 	// // // // // // // // // // // // // // // // // // // // // // // // // 
@@ -230,21 +233,26 @@ public class TileSelectionView extends JPanel {
 			JButton tileButton = new JButton();
 			tileButton.addActionListener(new OptionListener());
 			tileButton.setLayout(new BorderLayout());
-			//tileButton.setContentAreaFilled(false); // use if button has image
 			
-			Font labelFont = new Font("Default", Font.PLAIN, 14);
-			JLabel nameLabel = new JLabel(tile.getType(), JLabel.CENTER);
-			nameLabel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+			
+			JLabel nameLabel = new JLabel(tile.getType().toUpperCase(), JLabel.CENTER);
+			nameLabel.setFont(GameViewController.getGameFontSize(15));
+			nameLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 			nameLabel.setForeground(Color.BLUE);
-			nameLabel.setFont(labelFont);
 			
-			JLabel valueLabel = new JLabel(tile.getColor() +"   "+ 
-										   tile.getValue(), JLabel.CENTER);
-			valueLabel.setForeground(Color.BLUE);
-			valueLabel.setFont(labelFont);
-			
+			JPanel cubesPanel = new JPanel();
+			cubesPanel.setOpaque(false);
+			for (int j = 0; j < tile.getValue(); j++) {
+				JPanel cubePanel = new JPanel();
+				cubePanel.setPreferredSize(new Dimension(15,15));
+				cubePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, false));
+				
+				cubePanel.setBackground(Cubes.cubeColor(tile.getColor()));
+				cubesPanel.add(cubePanel, BorderLayout.CENTER);
+			}
+						
 			tileButton.add(nameLabel, BorderLayout.NORTH);
-			tileButton.add(valueLabel, BorderLayout.CENTER);
+			tileButton.add(cubesPanel, BorderLayout.CENTER);
 			
 			buttonsToPick.add(tileButton);
 			tilesPanel.add(tileButton);
@@ -309,12 +317,12 @@ public class TileSelectionView extends JPanel {
 	private void displayCompletedMessage() {
 		tilesPanel.removeAll();
 		tilesPanel.setLayout(null);
-		tilesPanel.setBorder(BorderFactory.createMatteBorder(3, 4, 5, 6, Color.BLUE));
+		tilesPanel.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.GREEN));
 		
 		JLabel nextLabel = new JLabel("Tile Selection Completed", JLabel.CENTER);
 		nextLabel.setSize(tilesPanel.getWidth(), 250);
 		nextLabel.setForeground(Color.WHITE);
-		nextLabel.setFont(new Font("Default", Font.BOLD, 30));
+		nextLabel.setFont(GameViewController.getGameFontSize(35));
 		
 		nextButton.addActionListener(new OptionListener());
 		nextButton.setSize(200, 50);
@@ -381,7 +389,7 @@ public class TileSelectionView extends JPanel {
 				
 				// only give numberOfTiles turns
 				if (count < numberOfTiles) {
-					checkTurn();		// check whos turn it is
+					checkTurn();		// check who's turn it is
 				}
 				else {
 					displayCompletedMessage();	// display final message
